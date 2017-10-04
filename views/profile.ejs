@@ -1,0 +1,58 @@
+<% include partials/header %>
+<% include partials/menu %>
+
+<div class="container">
+  <div class="row">
+
+    <div class="card card-container">
+       <form class="form-signin" method="post" action="">
+            <span id="reauth-email" class="reauth-email"></span>
+            <table id="mytable" class="table table-bordred table-striped">
+             <tr>
+               <td style="text-align: left; width:10%;">Email</td>
+               <td colspan="2" style="width:100%"><input class="form-control" value="<%= email %>" type="text" name="email" placeholder="Email" disabled></td>
+             </tr>
+
+             <tr>
+               <td style="text-align: left;" > Password </td>
+               <td colspan="2" style=""><input class="form-control" value="<%=item.password%>" type="password" name="password" placeholder="Password"></td>
+             </tr>
+
+             <tr>
+               <td rowspan="3" style="text-align: left;" > Potition</td>
+               <td style="text-align: left"> <input type="radio" name="position" value="Manager" <%= (item.position == "Manager") ? " checked":"" %> ></td> </td>
+               <td style="text-align: left; width:100%"> Manager </td>
+             </tr>
+             <tr>
+               <td style="text-align: left; " > <input type="radio" name="position" value="Software Developer" <%= (item.position == "Software Developer") ? " checked":"" %>></td> </td>
+               <td colspan="2" style="text-align: left"> Software Developer </td>
+             </tr>
+             <tr>
+               <td style="text-align: left; " > <input type="radio" name="position" value="Quality Assurance" <%= (item.position == "Quality Assurance") ? " checked":"" %>></td> </td>
+               <td colspan="2" style="text-align: left"> Quality Assurance </td>
+             </tr>
+
+             <tr>
+               <td style="text-align: left;" > Type </td>
+               <td colspan="2">
+
+                 <select class="form-control" style="width:100%" name="type">
+                   <option value="Full Time" <%= (item.type == "Full Time") ? " selected":"" %> >Full Time</option>
+                   <option value="Part Time" <%= (item.type == "Part Time") ? " selected":"" %> >Part Time</option>
+                 </select>
+               </td>
+             </tr>
+
+             <tr>
+               <td><button style="width:100%;" class="btn btn-success pull-left" type="submit" name="cari">UPDATE</button></td>
+               <td></td>
+               <td></td>
+             </tr>
+           </table>
+        </form>
+    </div><!-- car container -->
+
+  </div> <!--rows-->
+</div> <!-- container -->
+
+<% include partials/footer %>

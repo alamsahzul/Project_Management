@@ -1,0 +1,66 @@
+<% include partials/header %>
+<% include partials/menu %>
+
+<div class="container">
+  <div class="row">
+
+  <form action=/add method="post">
+
+    <div class="form-group row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">First Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="string" placeholder="First Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Last Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">User ID</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="user_id" placeholder="User ID">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" name="password" placeholder="Password">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Type</label>
+      <div class="col-sm-10">
+        <select class="form-control" name="type">
+          <option value="Full Time">Full Time</option>
+          <option value="Part Time">Part Time</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+</div>
+
+</div>
+<% include partials/footer %>
