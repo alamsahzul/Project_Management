@@ -33,8 +33,8 @@ module.exports = function(db){
       //   console.log('sukses');
       //   console.log(user_id);
         // let position = data_member.rows[0].role;
-       //res.render('addProject', { title: 'Add Project', page:'Add Project'});
-       res.redirect('/');
+       res.render('addProject', { title: 'Add Project', page:'Add Project'});
+       //res.redirect('/');
       // });
     // });
   });
