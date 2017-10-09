@@ -21,21 +21,22 @@ module.exports = function(db){
   });
 
 
-  router.get('/add', function(req, res, next){
-    console.log('ini adalah halaman profile');
-    let email = req.session.email;
-    db.query(`SELECT * FROM users WHERE email = $1`, [email], (err, dataUser) =>{
-      let item = dataUser.rows[0];
-      console.log(item);
-      let user_id = dataUser.rows[0].user_id;
-      console.log('user id : ',user_id);
+  router.get('/add',  /*loginChecker, */  function(req, res, next){
+    console.log('ini adalah halaman project');
+    //let email = req.session.email;
+    // db.query(`SELECT * FROM users WHERE email = $1`, [email], (err, dataUser) =>{
+    //   let item = dataUser.rows[0];
+    //   console.log(item);
+    //   let user_id = dataUser.rows[0].user_id;
+    //   console.log('user id : ',user_id);
       // db.query(`SELECT role FROM members WHERE user_id = $1`, [user_id], (err, data_member) =>{
       //   console.log('sukses');
       //   console.log(user_id);
         // let position = data_member.rows[0].role;
-        res.render('profile', { title: 'profile', page:'PROFILE', item:item, email:email, position:position });
+       //res.render('addProject', { title: 'Add Project', page:'Add Project'});
+       res.redirect('/');
       // });
-    });
+    // });
   });
 
   router.post('/add', /*loginChecker, */  function(req, res, next){

@@ -17,10 +17,10 @@
           <label for="inputPassword3" class="col-sm-2 col-form-label">Members</label>
           <div class="col-sm-10">
             <ul class="list-unstyled">
-              <% if(data.length>0){
+              <%# if(data.length>0){
                 for(var x=0; x<data.length; x++){%>
-                  <li> <input name="user" type="checkbox" value="<%= data[x].user_id %>"> <%= data[x].firstname %> <%= data[x].lastname %> </li>
-                <%}
+                  <li> <input name="user" type="checkbox" value="<%#= data[x].user_id %>"> <%#= data[x].firstname %> <%#= data[x].lastname %> </li>
+                <%#}
               }%>
             </ul>
           </div>

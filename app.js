@@ -41,15 +41,14 @@ app.use(session({
 }));
 app.use(cors())
 
+//untuk mendaftarkan router
 let index         = require('./routes/index')(pool);
 let projects      = require('./routes/projects')(pool);
 let profile       = require('./routes/profile')(pool);
-//let add           = require('./routes/add_projects')(pool);
 let user          = require('./routes/user')(pool);
 app.use('/',          index);
 app.use('/projects',  projects);
 app.use('/profile',   profile);
-//app.use('/add_projects',       add);
 app.use('/user',      user);
 
 // catch 404 and forward to error handler

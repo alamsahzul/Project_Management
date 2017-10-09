@@ -36,10 +36,34 @@ module.exports = function(db){
   }); //penutup rROUTER LOGIN
 
   //####  ROUTER LOGOUT
-  router.get('/logout', (req, res)=>{
+  router.get('/logout', (req, res, next) => {
     req.session.destroy(()=>{
       res.redirect('/')
     });
   }); //PENUTUP ROUTER LOGIN
+
+  router.get('/register', (req, res,  next) => {
+    console.log("halaman register");
+    res.render('register')
+  })
+
+  router.post('/register', (req, res,  next) => {
+    console.log("Halaman post register");
+    let email     = req.body.email,
+        password  = req.body.password,
+        firstname = req.body.firstname,
+        lastname  = req.body.lastname,
+        type      = req.body.type
+        console.log(email, password, firstname, lastname, type);
+        db.query(`INSERT INTO users VALUES ($1, $2, $3, $4, $5)`, [email, password, firstname, lastname, type], (err, data) => {
+          if (data){
+            console.log("sukses");
+            res.redirect('/');
+          }else {
+            res.send("Gagal Menyimpan User")
+          }
+        });
+  });
+
   return router;
 }

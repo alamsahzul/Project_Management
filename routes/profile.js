@@ -5,14 +5,16 @@ const router = express.Router();
 const loginChecker = require('../helpers/loginChecker');
 
 module.exports = function(db){
+
   router.get('/', function(req, res, next){
     console.log('ini adalah halaman profile');
-    let email = req.session.email;
-    db.query(`SELECT * FROM users WHERE email = $1`, [email], (err, dataUser) => {
-      if(err){
-        res.redirect('/')
-      }
-      let item  = dataUser.rows[0];
+    //let email = req.session.email;
+    // console.log(email);
+    // db.query(`SELECT * FROM users WHERE email = $1`, [email], (err, dataUser) => {
+    //   if(err){
+    //     res.redirect('/')
+    //   }
+    //   let item  = dataUser.rows[0];
       //console.log(item);
       // let user_id = dataUser.rows[0].user_id;
       // console.log('user id : ',user_id);
@@ -20,9 +22,9 @@ module.exports = function(db){
       //   console.log('sukses');
       //   console.log(user_id);
         // let position = data_member.rows[0].role;
-      res.render('profile', { title: 'profile', page:'PROFILE', item:item, email:email });
+      res.render('profile', { title: 'profile', page:'PROFILE' }); //item:item, ,  email:email , , { title: 'profile' }
       // });
-    });
+    // });
   });
 
   router.post('/', loginChecker, function(req, res, next){
