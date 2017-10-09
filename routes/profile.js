@@ -1,15 +1,15 @@
 'use strict'
 
-const express = require('express');
-const router = express.Router();
-const loginChecker = require('../helpers/loginChecker');
+const express       = require('express');
+const router        = express.Router();
+const loginChecker  = require('../helpers/loginChecker');
 
 module.exports = function(db){
 
   router.get('/', function(req, res, next){
     console.log('ini adalah halaman profile');
-    //let email = req.session.email;
-    // console.log(email);
+    let email = req.session.email;
+    console.log(email);
     // db.query(`SELECT * FROM users WHERE email = $1`, [email], (err, dataUser) => {
     //   if(err){
     //     res.redirect('/')
@@ -40,4 +40,5 @@ module.exports = function(db){
     });
   });
   return router;
+  
 }

@@ -17,10 +17,10 @@ module.exports = function(db){
 
   //####  ROUTER PROSES LOGIN
   router.post('/', function(req, res, next) {
-    let email = req.body.email,
-    password  = req.body.password;
-    console.log(email);
-    db.query(`SELECT * FROM users WHERE password = $1 AND email = $2`, [password, email], (err, data) => {
+    let input_email     = req.body.email,
+        input_password  = req.body.password;
+    //console.log(email);
+    db.query(`SELECT * FROM users WHERE password = $1 AND email = $2`, [input_password, input_email], (err, data) => {
       console.log(data.rows.length);
       if (data.rows.length == 1){
         req.session.email = data.rows[0].email;
