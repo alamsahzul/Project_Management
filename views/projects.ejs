@@ -91,10 +91,10 @@
                  <td>  <%= data[i].project_name    %></td>
                  <td>  <%= data[i].project_id    %></td>
                  <td>
-                   <a class="btn btn-success" href="/edit/<%=data[i].project_id%>">Edit</a>
+                   <a class="btn btn-success" href="/projects/edit/<%= data[i].project_id %>" >Edit</a>
                  </td>
                  <td>
-                   <a  class="btn btn-danger" href="/delete/<%=data[i].project_id%>" class='delete'
+                   <a  class="btn btn-danger" href="/projects/delete/<%=data[i].project_id%>" class='delete'
                    onclick="return confirm('Yakin menghapusn data?')">Delete</a>
                  </td>
                </tr>
