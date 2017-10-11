@@ -56,10 +56,10 @@
                 <td style="text-align: left;" > Name of Projects </td>
               </tr>
 
-              <tr>
+              <!-- <tr>
                 <td style="width:10%"><input type="checkbox" name="check_name" value="true"></td>
                 <td style="text-align: left;" > Members of Projects </td>
-              </tr>
+              </tr> -->
 
               <tr>
                 <td></td>
@@ -73,9 +73,9 @@
       <table id="mytable" class="table table-bordred table-striped">
         <thead>
           <tr>
-             <th style="width:10%">Project ID </th>
-             <th>Nama of Project</th>
-             <th>Members</th>
+             <th style="width:10%">No. </th>
+             <th>Name of Project</th>
+             <!-- <th>Members</th> -->
              <th colspan="2" style="width: 10%">ACTION</th>
            </tr>
        </thead>
@@ -87,9 +87,9 @@
            for (var i=0; i<panjang; i++)
              {%>
                <tr>
-                 <td style="width:10%">  <%= data[i].project_id    %></td>
-                 <td>  <%= data[i].project_name    %></td>
-                 <td>  <%= data[i].project_id    %></td>
+                 <td style="width:10%"> <a class="btn btn-primary" href="/projects/detail/<%=data[i].project_id%>"> <%= i+1 %> </a></td>
+                 <td style="text-align:left">  <%= data[i].project_name    %></td>
+                 <!-- <td>  <%= data[i].project_id    %></td> -->
                  <td>
                    <a class="btn btn-success" href="/projects/edit/<%= data[i].project_id %>" >Edit</a>
                  </td>

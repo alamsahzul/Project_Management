@@ -1,0 +1,49 @@
+<% include partials/header %>
+<% include partials/menu %>
+
+<div class="container-fluid">
+  <div class="row">
+
+  <div class="col-sm-4" style="max-width:20%; margin:10px;
+    background-color: antiquewhite; padding: 10px; padding-top:25px">
+    <ul class="list-group" >
+      <a href="?page=overview"><li class="list-group-item ">Overview</li></a>
+      <a href="?page=activity"><li class="list-group-item" style="background-color: black">Activity</li></a>
+      <a href="?page=members"><li class="list-group-item" style="background-color: black">Members</li></a>
+      <a href="?page=issues"><li class="list-group-item" style="background-color: black">Issues</li></a>
+    </ul>
+  </div>
+
+  <div class="col-sm-8" style="padding: 10px; padding-top:25px>
+
+    <h1>Library System</h1>
+
+    <ul class="list-group">
+      <li class="list-group-item">
+
+        Issue Tracking
+        <ul>
+          <li>Bug: 0 Open / 0</li>
+          <li>Feature: 2 Open / 6 </li>
+          <li>Support: 1 Open / 1</li>
+        </ul>
+
+
+      </li>
+      <li class="list-group-item">
+        Members
+        <ul>
+          <%if(panjang>0){
+            for(var x=0; panjang>x; x++){%>
+            <li> <%= data[x].firstname %> <%= data[x].lastname %> </li>
+          <%}
+          }%>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  </div>
+</div>
+
+<% include partials/footer %>
