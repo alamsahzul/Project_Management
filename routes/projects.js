@@ -64,35 +64,38 @@ module.exports = function(db){
   router.get('/detail/:project_id',  /*loginChecker, */  function(req, res, next){
     console.log('ini adalah halaman detail project');
     let project_id = req.params.project_id;
-    console.log(typeof(req.params));
-    console.log(typeof(req.query));
+    let url = req.url;
 
     db.query(`SELECT * FROM projects AS pr JOIN members AS mem
               ON pr.project_id = mem.project_id JOIN users
               ON mem.user_id = users.user_id
               WHERE pr.project_id = '1507608167548'`, (err, data_project) => {
-    //  console.log(data_project.rows);
+
       let panjang = data_project.rows.length;
-      //console.log(panjang);
-      res.render('detailProject', { title: 'Detail Project', page:'Detail Project', data: data_project.rows, panjang:panjang });
+
+      if(req.url == `/detail/${project_id}?page=activity`){
+        console.log('ini adalah halaman activity');
+        res.render('activityProject', { title: 'Activity Project', page:'Activity Project', data: data_project.rows, panjang:panjang });
+      }else if(req.url == `/detail/${project_id}?page=members`){
+        console.log('ini adalah halaman members');
+        console.log(data_project.rows[0].role);       
+        // db.query(`SELECT * FROM projects AS pr JOIN members AS mem
+        //           ON pr.project_id = mem.project_id JOIN users
+        //           ON mem.user_id = users.user_id
+        //           WHERE pr.project_id = '1507608167548'`, (err, data_project) => {
+            res.render('membersProject', { title: 'Members of Project', page:'Members Project', data: data_project.rows, panjang:panjang });
+                  // })
+      }else if(req.url == `/detail/${project_id}?page=issues`){
+        console.log('ini adalah halaman issues');
+        res.render('issuesProject', { title: 'Issues of Project', page:'Issues Project', data: data_project.rows, panjang:panjang });
+
+      }else{
+        console.log('ini adalah halaman members');
+        res.render('detailProject', { title: 'Detail Project', page:'Detail Project', data: data_project.rows, panjang:panjang });
+      }
     });
   });
 
-  router.get('/detail/:project_id',  /*loginChecker, */  function(req, res, next){
-    console.log('ini adalah halaman detail project');
-    let project_id = req.params.project_id;
-    console.log(project_id);
-
-    db.query(`SELECT * FROM projects AS pr JOIN members AS mem
-              ON pr.project_id = mem.project_id JOIN users
-              ON mem.user_id = users.user_id
-              WHERE pr.project_id = '1507608167548'`, (err, data_project) => {
-    //  console.log(data_project.rows);
-      let panjang = data_project.rows.length;
-      //console.log(panjang);
-      res.render('detailProject', { title: 'Detail Project', page:'Detail Project', data: data_project.rows, panjang:panjang });
-    });
-  });
 
   router.get('/edit/:project_id',  /*loginChecker, */  function(req, res, next){
     console.log('ini adalah halaman edit project');

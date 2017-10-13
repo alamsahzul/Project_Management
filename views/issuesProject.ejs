@@ -1,16 +1,21 @@
 <% include partials/header %>
 <% include partials/menu %>
 
-<div class="container">
-  <div class="row">
+<div class="container-fluid" style="margin:  10px 0 40px 0;">
 
-<!--################### The begini of The content body ####################-->
+  <div class="col-sm-3" style=" background-color: antiquewhite; margin:  10px 0 0px 0;">
+    <ul class="list-group" style=" margin:  10px 0 10px 0;">
+      <a href="?page=overview"><li class="list-group-item" style="background-color: black">Overview</li></a>
+      <a href="?page=activity"><li class="list-group-item" style="background-color: black">Activity</li></a>
+      <a href="?page=members"><li class="list-group-item" style="background-color: black">Members</li></a>
+      <a href="?page=issues"><li class="list-group-item" style="background-color: black">Issues</li></a>
+    </ul>
+  </div>
 
-    <div class="card card-container">
-      FILTERS
+  <div class="col-sm-9" style="background-color: antiquewhite;  margin: 10px 0 0 0;">
+    <div class="" style="background-color: white; margin: 10px 0 0 0">
         <form class="form-signin" method="get" action="/">
-            <!-- <span id="reauth-email" class="reauth-email"></span> -->
-            <table id="mytable" class="table table-bordred table-striped">
+              <table id="mytable" class="table table-bordred table-striped">
               <tr>
                 <td style="width:10%"><input type="checkbox" name="check_id" value="true"></td>
                 <td style="width:80%"><input type="text" class="form-control" placeholder="ID" required autofocus></td>
@@ -25,7 +30,7 @@
                 <td style="width:10%"><input type="checkbox" name="check_member" value="true"></td>
                 <td style="width:90%">
                   <select class="form-control" name="member">
-                      <option value="">Choose The Member ...</option>
+                      <option value="">Choose Position ...</option>
                       <option value="">1</option>
                       <option value="">2</option>
                   </select>
@@ -34,12 +39,11 @@
 
               <tr>
                 <td></td>
-                <td><button style="width:10%" class="btn btn-success pull-left" type="submit" name="cari">Search</button>
+                <td><button style="width%2F:10%" class="btn btn-success pull-left" type="submit" name="cari">Search</button>
               </tr>
             </table>
         </form><!-- /form -->
     </div><!-- /card-container -->
-
 
     <div class="card card-container">
       Option
@@ -48,18 +52,13 @@
             <table id="mytable" class="table table-bordred table-striped">
               <tr>
                 <td style="width:10%"><input type="checkbox" name="check_name" value="true"></td>
-                <td style="text-align: left;">Project IDs</td>
+                <td style="text-align: left;">Member ID</td>
               </tr>
 
               <tr>
                 <td style="width:10%"><input type="checkbox" name="check_name" value="true"></td>
-                <td style="text-align: left;" > Name of Projects </td>
+                <td style="text-align: left;" > Name of Members </td>
               </tr>
-
-              <!-- <tr>
-                <td style="width:10%"><input type="checkbox" name="check_name" value="true"></td>
-                <td style="text-align: left;" > Members of Projects </td>
-              </tr> -->
 
               <tr>
                 <td></td>
@@ -74,8 +73,8 @@
         <thead>
           <tr>
              <th style="width:10%">No. </th>
-             <th>Name of Project</th>
-             <!-- <th>Members</th> -->
+             <th>Name of Member</th>
+             <th>Position</th>
              <th colspan="2" style="width: 10%">ACTION</th>
            </tr>
        </thead>
@@ -101,6 +100,7 @@
        <% } %>
        </tbody>
        <tr>
+         <td></td>
          <td>
            <a  class="btn btn-success" href="/projects/add" class='btn btn-success pull-left' >Add</a>
          </td>
@@ -109,29 +109,26 @@
     </div><!-- /card-container -->
 
     <!-- pagination -->
-    <div class="container">
-    	<div class="row">
-    			<ul class="pagination pull-right" style="padding-bottom:30px;">
-    					<!-- Tombol Prev-->
-    					<%# if(halaman>1){ %>
-    						<li><a href="<%##= url.replace(`/?page=${halaman}`,`/?page=${halaman-1}`) %>">Prev</a></li>
-    					<%#}%>
+      <ul class="pagination pull-right">
+        <!-- Tombol Prev-->
+        <%# if(halaman>1){ %>
+        <li><a href="<%##= url.replace(`/?page=${halaman}`,`/?page=${halaman-1}`) %>">Prev</a></li>
+        <%#}%>
 
-    					<%#for(let i=1; i<=jumlahHalaman; i++){  %>
-    							<li<%#= (halaman==i) ? " class=active" : "" %> ><a href="<%#= url.replace(`/?page=${halaman}`,`/?page=${i}`) %>"><%#=i%></a></li>
-    					<%# }%>
-    					<!-- Tombol Next-->
-    					<%# if(halaman<jumlahHalaman){ %>
-    							<li><a href="<%#= url.replace(`/?page=${halaman}`,`/?page=${halaman+1}`) %>">Next</a></li>
-    						<%#}%>
-    			</ul>
-    		</div>
-    </div>
+        <%#for(let i=1; i<=jumlahHalaman; i++){  %>
+        <li<%#= (halaman==i) ? " class=active" : "" %> ><a href="<%#= url.replace(`/?page=${halaman}`,`/?page=${i}`) %>"><%#=i%></a></li>
+        <%# }%>
 
-<!--################### The end of Content Body ####################-->
-  </div>
+        <!-- Tombol Next-->
+        <%# if(halaman<jumlahHalaman){ %>
+        <li><a href="<%#= url.replace(`/?page=${halaman}`,`/?page=${halaman+1}`) %>">Next</a></li>
+        <%#}%>
+      </ul>
+    <!-- pagination -->
+
+  </div> <!-- Penutup col-9  -->
+
 </div>
-
 
 
 <% include partials/footer %>

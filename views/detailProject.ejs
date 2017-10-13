@@ -1,49 +1,68 @@
+
 <% include partials/header %>
 <% include partials/menu %>
 
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid" style="margin:  10px 0 40px 0;">
 
-  <div class="col-sm-4" style="max-width:20%; margin:10px;
-    background-color: antiquewhite; padding: 10px; padding-top:25px">
-    <ul class="list-group" >
-      <a href="?page=overview"><li class="list-group-item ">Overview</li></a>
+  <div class="col-sm-3" style=" background-color: antiquewhite; margin:  10px 0 0px 0;">
+    <ul class="list-group" style=" margin:  10px 0 10px 0;">
+      <a href="?page=overview"><li class="list-group-item" style="background-color: black">Overview</li></a>
       <a href="?page=activity"><li class="list-group-item" style="background-color: black">Activity</li></a>
       <a href="?page=members"><li class="list-group-item" style="background-color: black">Members</li></a>
       <a href="?page=issues"><li class="list-group-item" style="background-color: black">Issues</li></a>
     </ul>
   </div>
 
-  <div class="col-sm-8" style="padding: 10px; padding-top:25px>
+  <div class="col-sm-9" style="background-color: antiquewhite;  margin: 10px 0 0 0;">
 
-    <h1>Library System</h1>
+    <div class="card" style="background-color: white; margin: 10px 0 10px 0">
+      <h1>Library System</h1>
+      <% switch(page){
+          case "activity": %>
+          <ul>
+            <li>Activity</li>
+          </ul>
 
-    <ul class="list-group">
-      <li class="list-group-item">
+          <%case "members": %>
+          <ul>
+            <li> members</li>
+          </ul>
 
-        Issue Tracking
-        <ul>
-          <li>Bug: 0 Open / 0</li>
-          <li>Feature: 2 Open / 6 </li>
-          <li>Support: 1 Open / 1</li>
-        </ul>
+          <%case "issues": %>
+          <ul>
+            <li>issues</li>
+          </ul>
+
+        <%default:%>
+            <ul class="list-group">
+              <li class="list-group-item">
+
+                Issue Tracking
+                <ul>
+                  <li>Bug: 0 Open / 0</li>
+                  <li>Feature: 2 Open / 6 </li>
+                  <li>Support: 1 Open / 1</li>
+                </ul>
 
 
-      </li>
-      <li class="list-group-item">
-        Members
-        <ul>
-          <%if(panjang>0){
-            for(var x=0; panjang>x; x++){%>
-            <li> <%= data[x].firstname %> <%= data[x].lastname %> </li>
-          <%}
-          }%>
-        </ul>
-      </li>
-    </ul>
-  </div>
+              </li>
+              <li class="list-group-item">
+                Members
+                <ul>
+                  <%if(panjang>0){
+                    for(var x=0; panjang>x; x++){%>
+                    <li> <%= data[x].firstname %> <%= data[x].lastname %> </li>
+                  <%}
+                  }%>
+                </ul>
+              </li>
+            </ul>
+          <%}%>
+    </div>
 
-  </div>
+  </div> <!-- Penutup col-9  -->
+
 </div>
+
 
 <% include partials/footer %>
