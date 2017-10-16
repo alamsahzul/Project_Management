@@ -9,14 +9,63 @@ module.exports = function(db){
 
   router.get('/',  /*loginChecker, */  function(req, res, next) {
     console.log('halaman projects');
-    console.log(req.session.email);
+    console.log('ini req.session.email',req.session.email);
+    let bagianWhere     = [];
+    let where_status    = false;
+    let check_id        = req.query.check_id;
+    let project_id      = req.query.project_id;
+    let check_name      = req.query.check_name;
+    let project_name    = req.query.project_name;
+    let check_members   = req.query.check_members;
+    let project_members = req.query.project_members;
+    let halaman         = Number(req.query.page) || 1;
+    let url             = (req.url == "/") ? "/?page=1" : req.url;
+
+    if (url.indexOf('&cari=') != -1){
+      halaman = 1;
+    }
+    console.log(halaman);
+    url = url.replace('&cari=','')
+    console.log(url);
+    if(check_id){
+      bagianWhere.push( `id='${project_id}'` );
+      where_status = true;
+    }
+    console.log(bagianWhere);
+    // if(namaChecked){
+    //   bagianWhere.push( `nama='${nama}'` );
+    //   where_status = true;
+    // }
+    // if(umurChecked){
+    //   bagianWhere.push( `umur='${umur}'` );
+    //   where_status = true;
+    // }
+    // if(tinggiChecked){
+    //   bagianWhere.push( `tinggi='${tinggi}'` );
+    //   where_status = true;
+    // }
+    // if(dateChecked){
+    //   bagianWhere.push(`tanggal_lahir BETWEEN '${req.query.start_date}' AND '${req.query.end_date}'`);
+    //   where_status = true;
+    // }
+    // if(statusChecked){
+    //   bagianWhere.push( `status='${status}'` );
+    //   where_status = true;
+    // }
+    // let sql = 'SELECT count(id) FROM anggota';
+    // if(where_status){
+    //   sql += ' WHERE ' + bagianWhere.join(' AND ');
+    // }
     db.query('SELECT * FROM projects', (err, data) => {
       if(err){
         res.send('error');
       }else {
         let panjang = data.rows.length;
         console.log('panjang', panjang);
-        res.render('projects', { title: 'Projects', page:'PROJECTS', data: data.rows, panjang: panjang });
+        db.query('SELECT DISTINCT members.user_id, users.firstname, users.lastname FROM members JOIN users on members.user_id = users.user_id', (err, dataMember) => {
+          console.log(dataMember.rows[0]);
+          res.render('projects', { title: 'Projects', page:'PROJECTS', data: data.rows, panjang: panjang, dataMembers:dataMember.rows });
+        })
       }
     })
   });
@@ -78,7 +127,7 @@ module.exports = function(db){
         res.render('activityProject', { title: 'Activity Project', page:'Activity Project', data: data_project.rows, panjang:panjang });
       }else if(req.url == `/detail/${project_id}?page=members`){
         console.log('ini adalah halaman members');
-        console.log(data_project.rows[0].role);       
+        console.log(data_project.rows[0].role);
         // db.query(`SELECT * FROM projects AS pr JOIN members AS mem
         //           ON pr.project_id = mem.project_id JOIN users
         //           ON mem.user_id = users.user_id
