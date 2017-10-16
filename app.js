@@ -43,7 +43,7 @@ app.use(function(req, res, next) {
 app.use(session({
   secret: '2C44-4D44-WppQ38S',
   resave: true,
-  saveUninitialized: true 
+  saveUninitialized: true
 }));
 app.use(cors())
 
@@ -59,7 +59,7 @@ app.use('/user',      user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  let err = new Error('Not Found');
+  let err = new Error('Not Found'); 
   err.status = 404;
   next(err);
 });
