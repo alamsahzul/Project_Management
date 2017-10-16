@@ -10,10 +10,10 @@ module.exports = function(db){
     console.log('ini adalah halaman profile');
     let email = req.session.email;
     console.log(email);
-    // db.query(`SELECT * FROM users WHERE email = $1`, [email], (err, dataUser) => {
-    //   if(err){
-    //     res.redirect('/')
-    //   }
+    db.query(`SELECT email, position, type FROM users WHERE email = $1`, [email], (err, dataUser) => {
+      if(err){
+        res.redirect('/projects')
+      }
     //   let item  = dataUser.rows[0];
       //console.log(item);
       // let user_id = dataUser.rows[0].user_id;
@@ -22,12 +22,14 @@ module.exports = function(db){
       //   console.log('sukses');
       //   console.log(user_id);
         // let position = data_member.rows[0].role;
-      res.render('profile', { title: 'profile', page:'PROFILE' }); //item:item, ,  email:email , , { title: 'profile' }
+      console.log('halaman update profile');
+      console.log(dataUser.rows[0]);
+      res.render('users/profile', { title: 'profile', page:'PROFILE', dataUser:dataUser.rows[0] });
       // });
-    // });
+    });
   });
 
-  router.post('/', loginChecker, function(req, res, next){
+  router.post('/', /*loginChecker,*/ function(req, res, next){
     console.log('ini adalah halaman post profile');
     let email    = req.session.email;
     let password = req.body.password;
@@ -39,6 +41,7 @@ module.exports = function(db){
       res.redirect('/');
     });
   });
+
+
   return router;
-  
 }

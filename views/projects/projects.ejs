@@ -1,50 +1,75 @@
-<% include partials/header %>
-<% include partials/menu %>
+<% include ../partials/header %>
+<% include ../partials/menu %>
 
 <div class="container">
   <div class="row">
 
 <!--################### The begini of The content body ####################-->
-
     <div class="card card-container">
-      FILTERS
-        <form class="form-signin" method="get" action="">
-            <!-- <span id="reauth-email" class="reauth-email"></span> -->
-            <table id="mytable" class="table table-bordred table-striped">
-              <tr>
-                <td style="width:10%"><input type="checkbox" name="check_id" value="true"></td>
-                <td style="width:80%"><input type="text" name="project_id" class="form-control" placeholder="Project ID" autofocus></td>
-              </tr>
+      <center> <h1 style="width:100%; padding-top: 0vw; margin-top:0vw">FILTERS</h1> </center>
 
-              <tr>
-                <td style="width:10%"><input type="checkbox" name="check_name" value="true"></td>
-                <td style="width:80%"> <input type="text" name="project_name" class="form-control" placeholder="Project Name" ></td>
-              </tr>
+      <form class="form-signin" method="get" action="">
+        <input type="hidden" name="page" value="<%= halaman %>">
 
-              <tr>
-                <td style="width:10%"><input type="checkbox" name="check_members" value="true"></td>
-                <td style="width:90%">
-                  <select class="form-control" name="project_members">
-                      <option value="">Choose A Member</option>
-                      <%if(dataMembers.length>0){%>
-                        <%for(var i=0; dataMembers.length>i; i++){%>
-                          <option value="<%=dataMembers[i].user_id%>"><%=dataMembers[i].firstname%> <%=dataMembers[i].lastname%>%></option>
-                        <%}%>
-                      <%}%>
+        <div class="form-group">
+          <div style="width:100%; padding-left: 3vw">
+              <label for="project_id">Project ID</label>
+          </div>
+          <div style="width:2%; float:left">
+              <input name="check_id" value="true" type="checkbox" onchange="document.getElementById('project_id').disabled=!this.checked;"<%= (query.check_id) ? " checked":"" %>>
+          </div>
+          <div style="width:97%;float:right">
+              <input  class="form-control" id="project_id" name="project_id" value="<%= query.project_id %>"<%= (query.check_id) ? "":" disabled" %>/></td>
+          </div>
+        </div>
+        <br><br>
+        <div class="form-group">
+          <div style="width:100%; padding-left: 3vw">
+              <label for="project_name">Project Name</label>
+          </div>
+          <div style="width:2%; float:left">
+              <input name="check_name" value="true" type="checkbox" onchange="document.getElementById('project_name').disabled=!this.checked;"<%= (query.check_name) ? " checked":"" %>>
+          </div>
+          <div style="width:96.5%;float:right">
+              <input  class="form-control" id="project_name" name="project_name" value="<%= query.project_name %>"<%= (query.check_name) ? "":" disabled" %>/>
+          </div>
+        </div>
+        <br><br>
+        <div class="form-group">
+          <div style="width:100%; padding-left: 3vw">
+              <label for="project_members">Project Members</label>
+          </div>
+          <div style="width:2%; float:left">
+              <input name="check_name" value="true" type="checkbox" onchange="document.getElementById('project_name').disabled=!this.checked;"<%= (query.check_name) ? " checked":"" %>>
+          </div>
+          <div style="width:96.5%;float:right">
+            <select class="form-control" name="project_members">
+                <option value="">Choose A Member</option>
+                <%if(dataMembers.length>0){%>
+                  <%for(var i=0; dataMembers.length>i; i++){%>
+                    <option value="<%=dataMembers[i].user_id%>"><%=dataMembers[i].firstname%> <%=dataMembers[i].lastname%>%></option>
+                  <%}%>
+                <%}%>
+            </select>
+          </div>
+        </div>
 
-                  </select>
-                </td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td><button style="width:10%" class="btn btn-success pull-left" type="submit" >Search</button>
-              </tr>
-            </table>
-        </form><!-- /form -->
+        <div class="form-group" style="width:100%; padding-bottom:1vw; margin-bottom: 2vw;">
+          <div style="width:100%">
+              <label for="exampleInputEmail1"></label>
+          </div>
+          <div style="width:2%; float:left">
+          </div>
+          <div style="width:100%;float:right; padding: 1vw 0vw 0 3vw">
+            <button style="width:10%" class="btn btn-success pull-left" type="submit" name="cari" >Search</button>
+          </div>
+        </div>
+      </form>
     </div><!-- /card-container -->
 
 
+
+<!--#################### OPTIONS  #######################################-->
     <div class="card card-container">
       Option
         <form class="form-signin" method="GET" action="">
@@ -60,18 +85,15 @@
                 <td style="text-align: left;" > Name of Projects </td>
               </tr>
 
-              <!-- <tr>
-                <td style="width:10%"><input type="checkbox" name="check_name" value="true"></td>
-                <td style="text-align: left;" > Members of Projects </td>
-              </tr> -->
-
               <tr>
                 <td></td>
-                <td><button style="width:10%;" class="btn btn-success pull-left" type="submit" name="cari">Apply</button></td>
+                <td><button style="width:10%;" class="btn btn-success pull-left" type="submit" name="">Apply</button></td>
               </tr>
             </table>
         </form><!-- /form -->
     </div><!-- /card-container -->
+<!--#################### OPTIONS  #######################################-->
+
 
     <div class="card card-container">
       <table id="mytable" class="table table-bordred table-striped">
@@ -91,14 +113,14 @@
            for (var i=0; i<panjang; i++)
              {%>
                <tr>
-                 <td style="width:10%"> <a class="btn btn-primary" href="/projects/detail/<%=data[i].project_id%>?page=overview"> <%= i+1 %> </a></td>
-                 <td style="text-align:left">  <%= data[i].project_name    %></td>
-                 <!-- <td>  <%= data[i].project_id    %></td> -->
+                 <td style="width:10%"> <a class="btn btn-primary" href="/projectsDetail/<%=dataProject[i].project_id%>?page=overview"> <%= i+1 %> </a></td>
+                 <td style="text-align:left"><p><%= dataProject[i].project_name%></p></td>
+                 <!-- <td>  <%= dataProject[i].user_id %> </td> -->
                  <td>
-                   <a class="btn btn-success" href="/projects/edit/<%= data[i].project_id %>" >Edit</a>
+                   <a class="btn btn-success" href="/projects/edit/<%=dataProject[i].project_id%>">Edit</a>
                  </td>
                  <td>
-                   <a  class="btn btn-danger" href="/projects/delete/<%=data[i].project_id%>" class='delete'
+                   <a  class="btn btn-danger" href="/projects/delete/<%=dataProject[i].project_id%>" class='delete'
                    onclick="return confirm('Yakin menghapusn data?')">Delete</a>
                  </td>
                </tr>
@@ -106,28 +128,30 @@
        </tbody>
        <tr>
          <td>
-           <a  class="btn btn-success" href="/projects/add" class='btn btn-success pull-left' >Add</a>
+           <a  class="btn btn-success" href="/projects/addProject" class='btn btn-success pull-left' >Add</a>
          </td>
        </tr>
      </table>
     </div><!-- /card-container -->
 
-    <!-- pagination -->
+
+<!--############# pagination ###################-->
     <div class="container">
     	<div class="row">
     			<ul class="pagination pull-right" style="padding-bottom:30px;">
     					<!-- Tombol Prev-->
-    					<%# if(halaman>1){ %>
-    						<li><a href="<%#= url.replace(`/?page=${halaman}`,`/?page=${halaman-1}`) %>">Prev</a></li>
-    					<%#}%>
+    					<% if(halaman>1){ %>
+    						<li><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${halaman-1}`) %>">Prev</a></li>
+    					<%}%>
 
-    					<%#for(let i=1; i<=jumlahHalaman; i++){  %>
-    							<li<%#= (halaman==i) ? " class=active" : "" %> ><a href="<%#= url.replace(`/?page=${halaman}`,`/?page=${i}`) %>"><%#=i%></a></li>
-    					<%# }%>
+    					<%for(let i=1; i<=jumlahHalaman; i++){  %>
+                  <li<%= (halaman==i) ? " class=active" : "" %> ><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${i}`) %>"><%=i%></a></li>
+    					<%}%>
+
     					<!-- Tombol Next-->
-    					<%# if(halaman<jumlahHalaman){ %>
-    							<li><a href="<%#= url.replace(`/?page=${halaman}`,`/?page=${halaman+1}`) %>">Next</a></li>
-    						<%#}%>
+    					<% if(halaman<jumlahHalaman){ %>
+    							<li><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${halaman+1}`) %>">Next</a></li>
+    					<%}%>
     			</ul>
     		</div>
     </div>
@@ -138,4 +162,4 @@
 
 
 
-<% include partials/footer %>
+<% include ../partials/footer %>

@@ -9,7 +9,8 @@ module.exports = function(db){
 
   router.get('/',  /*loginChecker, */  function(req, res, next) {
     console.log('halaman projects');
-    console.log('ini req.session.email',req.session.email);
+    console.log('ini req.session.email', req.session.email);
+    // res.render('projects/projects2')
     let bagianWhere     = [];
     let where_status    = false;
     let check_id        = req.query.check_id;
@@ -24,65 +25,66 @@ module.exports = function(db){
     if (url.indexOf('&cari=') != -1){
       halaman = 1;
     }
-    console.log(halaman);
     url = url.replace('&cari=','')
-    console.log(url);
-    if(check_id){
-      bagianWhere.push( `id='${project_id}'` );
+    if(check_id && project_id ){
+      bagianWhere.push( `P.project_id='${project_id}'` );
       where_status = true;
     }
-    console.log(bagianWhere);
-    // if(namaChecked){
-    //   bagianWhere.push( `nama='${nama}'` );
-    //   where_status = true;
-    // }
-    // if(umurChecked){
-    //   bagianWhere.push( `umur='${umur}'` );
-    //   where_status = true;
-    // }
-    // if(tinggiChecked){
-    //   bagianWhere.push( `tinggi='${tinggi}'` );
-    //   where_status = true;
-    // }
-    // if(dateChecked){
-    //   bagianWhere.push(`tanggal_lahir BETWEEN '${req.query.start_date}' AND '${req.query.end_date}'`);
-    //   where_status = true;
-    // }
-    // if(statusChecked){
-    //   bagianWhere.push( `status='${status}'` );
-    //   where_status = true;
-    // }
-    // let sql = 'SELECT count(id) FROM anggota';
-    // if(where_status){
-    //   sql += ' WHERE ' + bagianWhere.join(' AND ');
-    // }
-    db.query('SELECT * FROM projects', (err, data) => {
+    if(check_name && project_name){
+      bagianWhere.push( `P.project_name='${project_name}'` );
+      where_status = true;
+    }
+    if(check_members && project_members){
+      bagianWhere.push( `M.user_id='${project_members}'` );
+      where_status = true;
+    }
+
+    let sql = 'SELECT COUNT(DISTINCT M.project_id) FROM members AS M JOIN projects AS P ON P.project_id=M.project_id';
+    if(where_status){
+      sql += ' WHERE ' + bagianWhere.join(' AND ');
+    }
+
+    db.query(sql, (err, count) => {
       if(err){
         res.send('error');
       }else {
-        let panjang = data.rows.length;
-        console.log('panjang', panjang);
-        db.query('SELECT DISTINCT members.user_id, users.firstname, users.lastname FROM members JOIN users on members.user_id = users.user_id', (err, dataMember) => {
-          console.log(dataMember.rows[0]);
-          res.render('projects', { title: 'Projects', page:'PROJECTS', data: data.rows, panjang: panjang, dataMembers:dataMember.rows });
+        let totalRecord   = count.rows[0].count;
+        let limit         = 2;
+        let offset        = (halaman-1)*limit;
+        let jumlahHalaman  = (totalRecord == 0) ? 1 : Math.ceil(totalRecord/limit);
+        sql = 'SELECT DISTINCT P.project_name, M.project_id FROM members AS M JOIN projects AS P ON P.project_id=M.project_id';
+        if(where_status){
+          sql += ' WHERE ' + bagianWhere.join(' AND ');
+        }
+        sql+= ` LIMIT ${limit} OFFSET ${offset}`
+        // query untuk
+        db.query(sql, (err, dataProject) => {
+          let panjang = dataProject.rows.length;
+          console.log('panjang', panjang);
+          // db query untuk jadi list di filter
+          db.query('SELECT DISTINCT members.user_id, users.firstname, users.lastname FROM members JOIN users on members.user_id = users.user_id', (err, dataMember) => {
+            console.log(dataMember.rows[0]);
+            res.render('projects/projects', { title: 'Projects', page:'PROJECTS', halaman:halaman,  jumlahHalaman: jumlahHalaman, dataProject: dataProject.rows, panjang: panjang, dataMembers:dataMember.rows, query: req.query, url:url });
+          })
         })
+
       }
     })
-  });
+    });
 
 
-  router.get('/add',  /*loginChecker, */  function(req, res, next){
+  router.get('/addProject',  /*loginChecker, */  function(req, res, next){
     console.log('ini adalah add halaman project');
     let email = req.session.email;
     console.log(req.session.email);
     db.query(`SELECT * FROM users`, (err, dataUser) => {
       let item = dataUser.rows;
       console.log(item);
-        res.render('addProject', { title: 'Add Project', page:'Add Project', data: item });
+        res.render('projects/addProject', { title: 'Add Project', page:'Add Project', data: item });
     });
   });
 
-  router.post('/add', /*loginChecker, */  function(req, res, next){
+  router.post('/addProject', /*loginChecker, */  function(req, res, next){
     console.log('ini adalah halaman post projects');
       let project_name = req.body.project_name;
       let x = req.body.user_id;
@@ -104,7 +106,7 @@ module.exports = function(db){
               return res.send(err);
             }
             //console.log("berhasil menyimpan ke table member");
-            res.redirect('/projects');
+            res.redirect('/projects/projects');
           }) //query members
         } //for
       }); //query project
@@ -150,10 +152,10 @@ module.exports = function(db){
     console.log('ini adalah halaman edit project');
     let project_id = req.params.project_id;
     console.log(project_id);
-    db.query(`SELECT * FROM projects WHERE project_id = ${project_id}`, (err, data) => {
-      let projects_item = data;
-      //console.log(projects_item);
-        //res.render('editProject', { title: 'Edit Project', page:'Edit Project', data: item });
+    db.query(`SELECT * FROM projects WHERE project_id ='${project_id}'`, (err, data) => {
+      // let projects_item = data;
+      // console.log(projects_item);
+        res.render('project/editProject', { title: 'Edit Project', page:'Edit Project', data: data });
     });
   });
 

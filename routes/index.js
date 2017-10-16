@@ -9,9 +9,9 @@ module.exports = function(db){
   router.get('/', function(req, res, next) {
     console.log('halaman login');
     if(req.session.email){
-      res.redirect('/project');
+      res.redirect('/projects');
     }else{
-      res.render('index', {title: "PM"});
+      res.render('index', {title: "PMS"});
     }
   }); //penutup ROUTER HALAMAN UTAMA/LOGIN
 
@@ -21,11 +21,11 @@ module.exports = function(db){
         input_password  = req.body.password;
     //console.log(email);
     db.query(`SELECT * FROM users WHERE password = $1 AND email = $2`, [input_password, input_email], (err, data) => {
-      console.log(data.rows.length);
+      console.log('data.rows.length: ',data.rows.length);
       if (data.rows.length == 1){
         req.session.email = data.rows[0].email;
         let email = req.session.email;
-        console.log(email);
+        console.log('email',email);
         res.redirect('/projects');
       }
       else {
