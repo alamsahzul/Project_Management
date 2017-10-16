@@ -43,7 +43,7 @@ app.use(function(req, res, next) {
 app.use(session({
   secret: '2C44-4D44-WppQ38S',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true 
 }));
 app.use(cors())
 
