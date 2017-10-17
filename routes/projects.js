@@ -9,8 +9,9 @@ module.exports = function(db){
 
   router.get('/',  /*loginChecker, */  function(req, res, next) {
     console.log('halaman projects');
-    console.log('ini req.session.email', req.session.email);
-    // res.render('projects/projects2')
+    // console.log('ini req.session.email', req.session.email);
+    let user_id = req.session.user_id;
+    
     let bagianWhere     = [];
     let where_status    = false;
     let check_id        = req.query.check_id;
@@ -21,21 +22,22 @@ module.exports = function(db){
     let project_members = req.query.project_members;
     let halaman         = Number(req.query.page) || 1;
     let url             = (req.url == "/") ? "/?page=1" : req.url;
+    console.log(url);
 
     if (url.indexOf('&cari=') != -1){
       halaman = 1;
     }
     url = url.replace('&cari=','')
     if(check_id && project_id ){
-      bagianWhere.push( `P.project_id='${project_id}'` );
+      bagianWhere.push( `projects.project_id='${project_id}'` );
       where_status = true;
     }
     if(check_name && project_name){
-      bagianWhere.push( `P.project_name='${project_name}'` );
+      bagianWhere.push( `projects.project_name='${project_name}'` );
       where_status = true;
     }
     if(check_members && project_members){
-      bagianWhere.push( `M.user_id='${project_members}'` );
+      bagianWhere.push( `members.user_id='${project_members}'` );
       where_status = true;
     }
 
@@ -49,28 +51,66 @@ module.exports = function(db){
         res.send('error');
       }else {
         let totalRecord   = count.rows[0].count;
-        let limit         = 2;
+        let limit         = 5;
         let offset        = (halaman-1)*limit;
-        let jumlahHalaman  = (totalRecord == 0) ? 1 : Math.ceil(totalRecord/limit);
-        sql = 'SELECT DISTINCT P.project_name, M.project_id FROM members AS M JOIN projects AS P ON P.project_id=M.project_id';
+        let jumlahHalaman = (totalRecord == 0) ? 1 : Math.ceil(totalRecord/limit);
+
+        // filer yang akan ditampilkan
+        let show                  = [];
+        let showStatusProjectId   = true;
+        let showStatusProjectName = true;
+
+        //jika option id dipilih
+        let showProjectId   = req.query.check_show_project_id;
+        if(!showProjectId){
+          showProjectId = 'members.project_id';
+          showStatusProjectId    = false;
+        }
+        show.push(showProjectId)
+
+        //jika option project name dipilih
+        let showProjectName = req.query.check_show_project_name;
+        if(showProjectName){
+          show.push(showProjectName)
+        }else{
+          showStatusProjectName = false;
+        }
+
+        console.log(showStatusProjectName);
+        console.log(showStatusProjectId);
+
+        db.query(sql, (err, dataView) => {
+
+        })
+
+        show                = show.toString() || '*'
+        console.log(show);
+
+
+
+        // query untuk menampilkan hasil pencarian
+        sql = `SELECT DISTINCT ${show} FROM members JOIN projects ON members.project_id = projects.project_id`;
+        // sql = 'SELECT DISTINCT P.project_name, M.project_id FROM members AS M JOIN projects AS P ON P.project_id=M.project_id';
         if(where_status){
           sql += ' WHERE ' + bagianWhere.join(' AND ');
         }
         sql+= ` LIMIT ${limit} OFFSET ${offset}`
+        console.log('SQL akhir: ',sql);
         // query untuk
         db.query(sql, (err, dataProject) => {
+          console.log('dataProject',dataProject.rows);
           let panjang = dataProject.rows.length;
-          console.log('panjang', panjang);
+          // console.log('panjang', panjang);
           // db query untuk jadi list di filter
-          db.query('SELECT DISTINCT members.user_id, users.firstname, users.lastname FROM members JOIN users on members.user_id = users.user_id', (err, dataMember) => {
-            console.log(dataMember.rows[0]);
-            res.render('projects/projects', { title: 'Projects', page:'PROJECTS', halaman:halaman,  jumlahHalaman: jumlahHalaman, dataProject: dataProject.rows, panjang: panjang, dataMembers:dataMember.rows, query: req.query, url:url });
+          // db.query('SELECT DISTINCT members.user_id, users.firstname, users.lastname FROM members JOIN users on members.user_id = users.user_id', (err, dataMember) => {
+          db.query('SELECT * FROM members JOIN projects ON projects.project_id=members.project_id JOIN users on members.user_id = users.user_id; ', (err, dataMember) => {
+            // console.log(dataMember.rows[0]);
+            // res.render('projects/projects', { title: 'Projects', page:'PROJECTS', halaman:halaman,  jumlahHalaman: jumlahHalaman, dataProject: dataProject.rows, panjang: panjang, dataMembers:dataMember.rows, query: req.query, url:url });
           })
         })
-
-      } 
+      }
     })
-    });
+  });
 
 
   router.get('/addProject',  /*loginChecker, */  function(req, res, next){

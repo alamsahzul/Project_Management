@@ -8,7 +8,7 @@
     <div class="card card-container">
       <center> <h1 style="width:100%; padding-top: 0vw; margin-top:0vw">FILTERS</h1> </center>
 
-      <form class="form-signin" method="get" action="">
+      <form class="form-signin" method="GET" action="">
         <input type="hidden" name="page" value="<%= halaman %>">
 
         <div class="form-group">
@@ -28,7 +28,7 @@
               <label for="project_name">Project Name</label>
           </div>
           <div style="width:2%; float:left">
-              <input name="check_name" value="true" type="checkbox" onchange="document.getElementById('project_name').disabled=!this.checked;"<%= (query.check_name) ? " checked":"" %>>
+              <input name="check_name" value="true" type="checkbox" onchange="document.getElementById('project_name').disabled=!this.checked;" <%= (query.check_name) ? " checked":"" %>>
           </div>
           <div style="width:96.5%;float:right">
               <input  class="form-control" id="project_name" name="project_name" value="<%= query.project_name %>"<%= (query.check_name) ? "":" disabled" %>/>
@@ -40,14 +40,14 @@
               <label for="project_members">Project Members</label>
           </div>
           <div style="width:2%; float:left">
-              <input name="check_name" value="true" type="checkbox" onchange="document.getElementById('project_name').disabled=!this.checked;"<%= (query.check_name) ? " checked":"" %>>
+              <input name="check_member" value="true" type="checkbox" onchange="document.getElementById('project_members').disabled=!this.checked;"<%= (query.check_member) ? " checked":"" %>>
           </div>
           <div style="width:96.5%;float:right">
-            <select class="form-control" name="project_members">
+            <select class="form-control" name="project_members" id="project_members">
                 <option value="">Choose A Member</option>
                 <%if(dataMembers.length>0){%>
                   <%for(var i=0; dataMembers.length>i; i++){%>
-                    <option value="<%=dataMembers[i].user_id%>"><%=dataMembers[i].firstname%> <%=dataMembers[i].lastname%>%></option>
+                    <option value="<%=dataMembers[i].user_id%>"> <%=dataMembers[i].firstname%> <%=dataMembers[i].lastname%> </option>
                   <%}%>
                 <%}%>
             </select>
@@ -76,18 +76,18 @@
             <!-- <span id="reauth-email" class="reauth-email"></span> -->
             <table id="mytable" class="table table-bordred table-striped">
               <tr>
-                <td style="width:10%"><input type="checkbox" name="check_name" value="true"></td>
+                <td style="width:10%"><input type="checkbox" name="check_show_project_id" value="members.project_id" <%=(query.check_show_project_id) ? " checked":"" %>></td>
                 <td style="text-align: left;">Project IDs</td>
               </tr>
 
               <tr>
-                <td style="width:10%"><input type="checkbox" name="check_name" value="true"></td>
+                <td style="width:10%"><input type="checkbox" name="check_show_project_name" value="projects.project_name" <%=(query.check_show_project_name) ? " checked":"" %>></td>
                 <td style="text-align: left;" > Name of Projects </td>
               </tr>
 
               <tr>
                 <td></td>
-                <td><button style="width:10%;" class="btn btn-success pull-left" type="submit" name="">Apply</button></td>
+                <td><button style="width:10%;" class="btn btn-success pull-left" type="submit" name="show">Apply</button></td>
               </tr>
             </table>
         </form><!-- /form -->
@@ -113,7 +113,7 @@
            for (var i=0; i<panjang; i++)
              {%>
                <tr>
-                 <td style="width:10%"> <a class="btn btn-primary" href="/projectsDetail/<%=dataProject[i].project_id%>?page=overview"> <%= i+1 %> </a></td>
+                 <td style="width:10%"> <a class="btn btn-primary" href="/projectsDetail/<%=dataProject[i].project_id%>"> <%=dataProject[i].project_id%> </a></td>
                  <td style="text-align:left"><p><%= dataProject[i].project_name%></p></td>
                  <!-- <td>  <%= dataProject[i].user_id %> </td> -->
                  <td>

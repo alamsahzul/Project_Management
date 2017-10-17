@@ -20,12 +20,10 @@ module.exports = function(db){
     let input_email     = req.body.email,
         input_password  = req.body.password;
     //console.log(email);
-    db.query(`SELECT * FROM users WHERE password = $1 AND email = $2`, [input_password, input_email], (err, data) => {
+    db.query(`SELECT user_id FROM users WHERE password = $1 AND email = $2`, [input_password, input_email], (err, data) => {
       console.log('data.rows.length: ',data.rows.length);
       if (data.rows.length == 1){
-        req.session.email = data.rows[0].email;
-        let email = req.session.email;
-        console.log('email',email);
+        req.session.user_id = data.rows[0].user_id;
         res.redirect('/projects');
       }
       else {
