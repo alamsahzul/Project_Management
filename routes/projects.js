@@ -101,7 +101,7 @@ module.exports = function(db){
           let sql = `SELECT view from users WHERE user_id = '${user_id}'`;
           db.query(sql, (err, dataView) => {
             let view = dataView.rows[0].view;
-            console.log('TES 6 view:', view);
+            // console.log('TES 6 view:', view);
             // query untuk menampilkan hasil pencarian
             sql = `SELECT ${view} FROM members JOIN projects ON members.project_id = projects.project_id`;
             if(where_status){
