@@ -89,8 +89,8 @@ module.exports = function(db){
           showStatusProjectMembers = false;
         }
 
-        console.log("TES 2 showStatusProjectName:",showStatusProjectName);
-        console.log('TES 3 showStatusProjectId:',showStatusProjectId);
+        // console.log("TES 2 showStatusProjectName:",showStatusProjectName);
+        // console.log('TES 3 showStatusProjectId:',showStatusProjectId);
         show                = show.toString() || '*'
         // console.log('TES 4 show:',show);
         // console.log('TES 5 user_id:',user_id);
