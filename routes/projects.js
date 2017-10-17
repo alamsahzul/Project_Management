@@ -92,7 +92,7 @@ module.exports = function(db){
         console.log("TES 2 showStatusProjectName:",showStatusProjectName);
         console.log('TES 3 showStatusProjectId:',showStatusProjectId);
         show                = show.toString() || '*'
-        console.log('TES 4 show:',show);
+        // console.log('TES 4 show:',show);
         console.log('TES 5 user_id:',user_id);
 
         let sql = 'SELECT DISTINCT users.firstname, users.lastname FROM members JOIN users ON members.user_id = users.user_id';
@@ -107,7 +107,7 @@ module.exports = function(db){
             if(where_status){
               sql += ' WHERE ' + bagianWhere.join(' AND ');
             }
-            
+
             sql+= ` LIMIT ${limit} OFFSET ${offset}`
             console.log('TES 7 SQL project:', sql);
             db.query(sql, (err, dataProject) => {
