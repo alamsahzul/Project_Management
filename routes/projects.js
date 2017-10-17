@@ -107,6 +107,7 @@ module.exports = function(db){
             if(where_status){
               sql += ' WHERE ' + bagianWhere.join(' AND ');
             }
+            
             sql+= ` LIMIT ${limit} OFFSET ${offset}`
             console.log('TES 7 SQL project:', sql);
             db.query(sql, (err, dataProject) => {
