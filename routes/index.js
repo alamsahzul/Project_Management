@@ -31,7 +31,7 @@ module.exports = function(db){
         res.redirect('/');
       }
    }); //penutup client query
-  }); //penutup rROUTER LOGIN
+  }); //penutup ROUTER LOGIN
 
   //####  ROUTER LOGOUT
   router.get('/logout', (req, res, next) => {
