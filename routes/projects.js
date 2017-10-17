@@ -93,7 +93,7 @@ module.exports = function(db){
         console.log('TES 3 showStatusProjectId:',showStatusProjectId);
         show                = show.toString() || '*'
         // console.log('TES 4 show:',show);
-        console.log('TES 5 user_id:',user_id);
+        // console.log('TES 5 user_id:',user_id);
 
         let sql = 'SELECT DISTINCT users.firstname, users.lastname FROM members JOIN users ON members.user_id = users.user_id';
         db.query(sql, (err, dataMember) => {
