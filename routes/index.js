@@ -13,7 +13,7 @@ module.exports = function(db){
     }else{
       res.render('index', {title: "PMS"});
     }
-  }); //penutup ROUTER HALAMAN UTAMA/LOGIN
+  }); //penutup ROUTER HALAMAN UTAMA/LOGIN 
 
   //####  ROUTER PROSES LOGIN
   router.post('/', function(req, res, next) {
