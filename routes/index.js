@@ -1,6 +1,6 @@
 'use strict'
 
-const express   = require('express');
+const express   = require('express'); 
 const router    = express.Router();
 const app       = express();
 
@@ -13,7 +13,7 @@ module.exports = function(db){
     }else{
       res.render('index', {title: "PMS"});
     }
-  }); //penutup ROUTER HALAMAN UTAMA/LOGIN
+  }); //penutup ROUTER HALAMAN UTAMA/LOGIN 
 
   //####  ROUTER PROSES LOGIN
   router.post('/', function(req, res, next) {
@@ -32,7 +32,7 @@ module.exports = function(db){
         res.redirect('/');
       }
    }); //penutup client query
-  }); //penutup rROUTER LOGIN
+  }); //penutup ROUTER LOGIN
 
   //####  ROUTER LOGOUT
   router.get('/logout', (req, res, next) => {
