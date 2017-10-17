@@ -7,7 +7,7 @@ const loginChecker  = require('../helpers/loginChecker');
 
 module.exports = function(db){
 
-  router.get('/',  /*loginChecker, */  function(req, res, next) {
+  router.get('/',  loginChecker, function(req, res, next) {
     console.log('halaman projects');
     // console.log('ini req.session.email', req.session.email);
     let user_id = req.session.user_id;
@@ -103,7 +103,7 @@ module.exports = function(db){
             let view = dataView.rows[0].view;
             console.log('TES 6 view:', view);
             // query untuk menampilkan hasil pencarian
-            sql = `SELECT DISTINCT ${view} FROM members JOIN projects ON members.project_id = projects.project_id`;
+            sql = `SELECT ${view} FROM members JOIN projects ON members.project_id = projects.project_id`;
             if(where_status){
               sql += ' WHERE ' + bagianWhere.join(' AND ');
             }
@@ -114,8 +114,9 @@ module.exports = function(db){
               console.log('count',count.rows);
               console.log('dataMember.rows',dataMember.rows);
               console.log('dataView.rows',dataView.rows);
-              console.log('project',dataProject.rows);
-              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', panjang:count.rows[0], dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
+              console.log('project',dataProject.rows[0].project_name);
+              console.log(count.rows[0].count);
+              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', panjang:count.rows[0].count, dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
             }); //query data project
           }); //query data view
         }); //query data member

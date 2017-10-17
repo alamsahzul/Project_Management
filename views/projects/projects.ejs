@@ -85,6 +85,12 @@
                   </tr>
 
                   <tr>
+                    <td style="width:10%"><input type="checkbox" name="check_show_project_members" value="projects.project_members" <%=(query.check_show_project_members) ? " checked":"" %>></td>
+                    <td style="text-align: left;" > Members </td>
+                  </tr>
+
+
+                  <tr>
                     <td></td>
                     <td><button style="width:10%;" class="btn btn-success pull-left" type="submit" name="show">Apply</button></td>
                   </tr>
@@ -100,7 +106,7 @@
           <tr>
              <th style="width:10%">No. </th>
              <th>Name of Project</th>
-             <!-- <th>Members</th> -->
+             <th>Members</th>
              <th colspan="2" style="width: 10%">ACTION</th>
            </tr>
        </thead>

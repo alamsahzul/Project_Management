@@ -17,9 +17,10 @@ module.exports = function(db){
 
   //####  ROUTER PROSES LOGIN
   router.post('/', function(req, res, next) {
+    console.log('Halaman post login');
     let input_email     = req.body.email,
         input_password  = req.body.password;
-    //console.log(email);
+    console.log(input_email);
     db.query(`SELECT user_id FROM users WHERE password = $1 AND email = $2`, [input_password, input_email], (err, data) => {
       console.log('data.rows.length: ',data.rows.length);
       if (data.rows.length == 1){
