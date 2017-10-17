@@ -11,7 +11,7 @@ module.exports = function(db){
     console.log('halaman projects');
     // console.log('ini req.session.email', req.session.email);
     let user_id = req.session.user_id;
-    
+
     let bagianWhere     = [];
     let where_status    = false;
     let check_id        = req.query.check_id;
@@ -45,7 +45,7 @@ module.exports = function(db){
     if(where_status){
       sql += ' WHERE ' + bagianWhere.join(' AND ');
     }
-
+    console.log('TES 1: ',sql, 'RESULT: OK');
     db.query(sql, (err, count) => {
       if(err){
         res.send('error');
@@ -56,15 +56,18 @@ module.exports = function(db){
         let jumlahHalaman = (totalRecord == 0) ? 1 : Math.ceil(totalRecord/limit);
 
         // filer yang akan ditampilkan
-        let show                  = [];
-        let showStatusProjectId   = true;
-        let showStatusProjectName = true;
+        let show                      = [];
+        let showStatusProjectId       = true;
+        let showStatusProjectName     = true;
+        let showStatusProjectMembers  = true;
 
         //jika option id dipilih
         let showProjectId   = req.query.check_show_project_id;
         if(!showProjectId){
-          showProjectId = 'members.project_id';
-          showStatusProjectId    = false;
+          showProjectId        = 'members.project_id';
+          showStatusProjectId  = false;
+        }else {
+          showStatusProjectId  = true;
         }
         show.push(showProjectId)
 
@@ -72,42 +75,51 @@ module.exports = function(db){
         let showProjectName = req.query.check_show_project_name;
         if(showProjectName){
           show.push(showProjectName)
+          showStatusProjectName = true;
         }else{
           showStatusProjectName = false;
         }
 
-        console.log(showStatusProjectName);
-        console.log(showStatusProjectId);
-
-        db.query(sql, (err, dataView) => {
-
-        })
-
-        show                = show.toString() || '*'
-        console.log(show);
-
-
-
-        // query untuk menampilkan hasil pencarian
-        sql = `SELECT DISTINCT ${show} FROM members JOIN projects ON members.project_id = projects.project_id`;
-        // sql = 'SELECT DISTINCT P.project_name, M.project_id FROM members AS M JOIN projects AS P ON P.project_id=M.project_id';
-        if(where_status){
-          sql += ' WHERE ' + bagianWhere.join(' AND ');
+        //jika option members project dipilih
+        let showProjectMembers = req.query.check_show_project_members;
+        if(showStatusProjectMembers){
+          show.push(showStatusProjectMembers)
+          showStatusProjectMembers = true;
+        }else{
+          showStatusProjectMembers = false;
         }
-        sql+= ` LIMIT ${limit} OFFSET ${offset}`
-        console.log('SQL akhir: ',sql);
-        // query untuk
-        db.query(sql, (err, dataProject) => {
-          console.log('dataProject',dataProject.rows);
-          let panjang = dataProject.rows.length;
-          // console.log('panjang', panjang);
-          // db query untuk jadi list di filter
-          // db.query('SELECT DISTINCT members.user_id, users.firstname, users.lastname FROM members JOIN users on members.user_id = users.user_id', (err, dataMember) => {
-          db.query('SELECT * FROM members JOIN projects ON projects.project_id=members.project_id JOIN users on members.user_id = users.user_id; ', (err, dataMember) => {
-            // console.log(dataMember.rows[0]);
-            // res.render('projects/projects', { title: 'Projects', page:'PROJECTS', halaman:halaman,  jumlahHalaman: jumlahHalaman, dataProject: dataProject.rows, panjang: panjang, dataMembers:dataMember.rows, query: req.query, url:url });
-          })
-        })
+
+        console.log("TES 2 showStatusProjectName:",showStatusProjectName);
+        console.log('TES 3 showStatusProjectId:',showStatusProjectId);
+        show                = show.toString() || '*'
+        console.log('TES 4 show:',show);
+        console.log('TES 5 user_id:',user_id);
+
+        let sql = 'SELECT DISTINCT users.firstname, users.lastname FROM members JOIN users ON members.user_id = users.user_id';
+        db.query(sql, (err, dataMember) => {
+          let memberUser = dataMember.rows;
+          let sql = `SELECT view from users WHERE user_id = '${user_id}'`;
+          db.query(sql, (err, dataView) => {
+            let view = dataView.rows[0].view;
+            console.log('TES 6 view:', view);
+            // query untuk menampilkan hasil pencarian
+            sql = `SELECT DISTINCT ${view} FROM members JOIN projects ON members.project_id = projects.project_id`;
+            if(where_status){
+              sql += ' WHERE ' + bagianWhere.join(' AND ');
+            }
+            sql+= ` LIMIT ${limit} OFFSET ${offset}`
+            console.log('TES 7 SQL project:', sql);
+            db.query(sql, (err, dataProject) => {
+              // let project = dataProject.rows;
+              console.log('count',count.rows);
+              console.log('dataMember.rows',dataMember.rows);
+              console.log('dataView.rows',dataView.rows);
+              console.log('project',dataProject.rows);
+              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', panjang:count.rows[0], dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
+            }); //query data project
+          }); //query data view
+        }); //query data member
+
       }
     })
   });

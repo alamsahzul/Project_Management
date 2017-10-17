@@ -68,31 +68,30 @@
     </div><!-- /card-container -->
 
 
+    <!--#################### OPTIONS  #######################################-->
+        <div class="card card-container">
+          Option
+            <form class="form-signin" method="GET" action="">
+                <!-- <span id="reauth-email" class="reauth-email"></span> -->
+                <table id="mytable" class="table table-bordred table-striped">
+                  <tr>
+                    <td style="width:10%"><input type="checkbox" name="check_show_project_id" value="members.project_id" <%=(query.check_show_project_id) ? " checked":"" %>></td>
+                    <td style="text-align: left;">Project IDs</td>
+                  </tr>
 
-<!--#################### OPTIONS  #######################################-->
-    <div class="card card-container">
-      Option
-        <form class="form-signin" method="GET" action="">
-            <!-- <span id="reauth-email" class="reauth-email"></span> -->
-            <table id="mytable" class="table table-bordred table-striped">
-              <tr>
-                <td style="width:10%"><input type="checkbox" name="check_show_project_id" value="members.project_id" <%=(query.check_show_project_id) ? " checked":"" %>></td>
-                <td style="text-align: left;">Project IDs</td>
-              </tr>
+                  <tr>
+                    <td style="width:10%"><input type="checkbox" name="check_show_project_name" value="projects.project_name" <%=(query.check_show_project_name) ? " checked":"" %>></td>
+                    <td style="text-align: left;" > Name of Projects </td>
+                  </tr>
 
-              <tr>
-                <td style="width:10%"><input type="checkbox" name="check_show_project_name" value="projects.project_name" <%=(query.check_show_project_name) ? " checked":"" %>></td>
-                <td style="text-align: left;" > Name of Projects </td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td><button style="width:10%;" class="btn btn-success pull-left" type="submit" name="show">Apply</button></td>
-              </tr>
-            </table>
-        </form><!-- /form -->
-    </div><!-- /card-container -->
-<!--#################### OPTIONS  #######################################-->
+                  <tr>
+                    <td></td>
+                    <td><button style="width:10%;" class="btn btn-success pull-left" type="submit" name="show">Apply</button></td>
+                  </tr>
+                </table>
+            </form><!-- /form -->
+        </div><!-- /card-container -->
+    <!--#################### OPTIONS  #######################################-->
 
 
     <div class="card card-container">
@@ -135,26 +134,27 @@
     </div><!-- /card-container -->
 
 
-<!--############# pagination ###################-->
-    <div class="container">
-    	<div class="row">
-    			<ul class="pagination pull-right" style="padding-bottom:30px;">
-    					<!-- Tombol Prev-->
-    					<% if(halaman>1){ %>
-    						<li><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${halaman-1}`) %>">Prev</a></li>
-    					<%}%>
+    <!--############# pagination ###################-->
+        <div class="container">
+        	<div class="row">
+        			<ul class="pagination pull-right" style="padding-bottom:30px;">
+        					<!-- Tombol Prev-->
+        					<% if(halaman>1){ %>
+        						<li><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${halaman-1}`) %>">Prev</a></li>
+        					<%}%>
 
-    					<%for(let i=1; i<=jumlahHalaman; i++){  %>
-                  <li<%= (halaman==i) ? " class=active" : "" %> ><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${i}`) %>"><%=i%></a></li>
-    					<%}%>
+        					<%for(let i=1; i<=jumlahHalaman; i++){  %>
+                      <li<%= (halaman==i) ? " class=active" : "" %> ><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${i}`) %>"><%=i%></a></li>
+        					<%}%>
 
-    					<!-- Tombol Next-->
-    					<% if(halaman<jumlahHalaman){ %>
-    							<li><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${halaman+1}`) %>">Next</a></li>
-    					<%}%>
-    			</ul>
-    		</div>
-    </div>
+        					<!-- Tombol Next-->
+        					<% if(halaman<jumlahHalaman){ %>
+        							<li><a href="<%= url.replace(`/?page=${halaman}`,`/projects?page=${halaman+1}`) %>">Next</a></li>
+        					<%}%>
+        			</ul>
+        		</div>
+        </div>
+
 
 <!--################### The end of Content Body ####################-->
   </div>
