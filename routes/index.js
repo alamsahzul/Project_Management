@@ -12,38 +12,26 @@ module.exports = function(db){
       res.redirect('/projects');
     }else{
       // res.render('index', {title: "PMS"});
-    db.query(`SELECT * FROM members`,(err, data) => {
+    db.query(`SELECT DISTINCT project_id FROM members`,(err, data) => {
               let akhir = []
               console.log(akhir.length);
               console.log(data.rows.length );
-              var temp = [];
-              for(var i=0; (data.rows.length||akhir.length)>i; i++){
-                temp.push(data.rows[i].project_id);
-                if(data.rows[i].project_id){
-                  akhir.push(data.rows[i].project_id);
+
+                for(let j=0; j<data.rows.length; j++){
+                  console.log(data.rows[j]);
+                  akhir.push(data.rows[j])
+                  let sql = `SELECT firstname, lastname FROM users JOIN members ON users.user_id = members.user_id WHERE project_id = '${data.rows[j].project_id}'`;
+                  console.log(sql);
+                  db.query(sql, (err, users) => {
+                    // console.log('members project_id ', data.rows[j].project_id+" adalah "+ users.rows);
+                    console.log(users.rows[1].firstname);
+                  });
                 }
-
-              }
-
-              // function tes () {
-              //   for(var i=0; /*data.rows.length || akhir.length */ (1 || 8) >i; i++){
-              //     // if(data.rows[i].project_id == akhir[i] ){
-              //     //   akhir.push(data.rows[i].project_id);
-              //     // }else{
-              //     //   akhir.push(data.rows[i].project_id);
-              //     // }
-              //     console.log(i);
-              //   }
-              //
-              //   return i;
-              // }
-        let tes1 = temp;
-        //tes();
-        //console.log(data.rows[0].project_id);
+        let tes1 = akhir;
         res.send(tes1);
     })
-    }
-  }); //penutup ROUTER HALAMAN UTAMA/LOGIN
+  }
+}); //penutup ROUTER HALAMAN UTAMA/LOGIN
 
   //####  ROUTER PROSES LOGIN
   router.post('/', function(req, res, next) {
