@@ -106,14 +106,15 @@
       <table id="mytable" class="table table-bordred table-striped">
         <thead>
           <tr>
-             <th style="width:10%">Project ID</th>
-
+            <%if(dataProject[i].project_id){%>
+              <th style="width:10%">Project ID</th>
+            <%}%>
              <%if(dataProject[i].project_name){%>
                 <th>Name of Project</th>
              <%}%>
              <!-- <th>Members</th> -->
              <%if(role.trim()=='admin'){%>
-               <th colspan="2" style="width: 10%; text-align:center">ACTION</th>
+               <th class="action">ACTION</th>
                <%}%>
            </tr>
        </thead>
@@ -125,18 +126,18 @@
            for (var i=0; i<panjang; i++)
              {%>
                <tr>
-                 <td style="width:10%"> <a class="btn btn-primary" href="/projectsDetail/<%=dataProject[i].project_id%>"> <%=dataProject[i].project_id%> </a></td>
+                 <%if(dataProject[i].project_id){%>
+                   <td style="width:10%"> <a class="btn btn-primary" href="/projectsDetail/<%=dataProject[i].project_id%>"> <%=dataProject[i].project_id%> </a></td>
+                 <%}%>
                  <%if(dataProject[i].project_name){%>
                     <td style="text-align:left"><p><%= dataProject[i].project_name %></p></td>
                  <%}%>
 
                  <!-- <td>  <%= dataProject[i].user_id %> </td> -->
                   <%if(role.trim() == 'admin'){%>
-                    <td>
-                      <a class="btn btn-success" href="/projects/edit/<%=dataProject[i].project_id%>">Edit</a>
-                    </td>
-                    <td>
-                      <a  class="btn btn-danger" href="/projects/delete/<%=dataProject[i].project_id%>" class='delete'
+                    <td class="action">
+                      <a class="btn btn-success editDelete" href="/projects/edit/<%=dataProject[i].project_id%>">Edit</a>
+                      <a  class="btn btn-danger editDelete" href="/projects/delete/<%=dataProject[i].project_id%>" class='delete'
                       onclick="return confirm('Yakin menghapusn data?')">Delete</a>
                     </td>
                   <%}%>
@@ -146,7 +147,7 @@
        </tbody>
        <tr>
          <td>
-           <a  class="btn btn-success" href="/projects/addProject" class='btn btn-success pull-left' >Add</a>
+           <a  class="btn btn-success " href="/projects/addProject" class='btn btn-success pull-left' >Add</a>
          </td>
        </tr>
      </table>

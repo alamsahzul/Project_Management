@@ -9,24 +9,8 @@ module.exports = function(db){
 
   router.get('/',  loginChecker, function(req, res, next) {
     console.log('halaman projects');
-    // console.log('ini req.session.email', req.session.email);
     let user_id = req.session.user_id;
     let role    = req.session.role;
-    // let role    = "admin";
-    console.log(typeof(role));
-    console.log(role);
-    let a;
-    let b = "";
-    let c = null;
-    let d = undefined;
-    console.log(typeof(a));
-    console.log(a);
-    console.log(typeof(b));
-    console.log(b);
-    console.log(typeof(c));
-    console.log(c);
-    console.log(typeof(d));
-    console.log(d);
 
     let bagianWhere     = [];
     let where_status    = false;
@@ -38,7 +22,6 @@ module.exports = function(db){
     let project_members = req.query.project_members;
     let halaman         = Number(req.query.page) || 1;
     let url             = (req.url == "/") ? "/?page=1" : req.url;
-    // console.log(url);
 
     if (url.indexOf('&cari=') != -1){
       halaman = 1;
@@ -117,7 +100,7 @@ module.exports = function(db){
           let sql = `SELECT view from users WHERE user_id = '${user_id}'`;
           db.query(sql, (err, dataView) => {
             let view = dataView.rows[0].view;
-            // console.log('TES 6 view:', view);
+            console.log('TES 6 view:', view);
             // query untuk menampilkan hasil pencarian
             sql = `SELECT ${view} FROM members JOIN projects ON members.project_id = projects.project_id`;
             if(where_status){
@@ -127,13 +110,22 @@ module.exports = function(db){
             sql+= ` LIMIT ${limit} OFFSET ${offset}`
             console.log('TES 7 SQL project:', sql);
             db.query(sql, (err, dataProject) => {
+
+              if(view==""){
+                totalRecord = 0;
+              }
+              console.log(dataProject.rows, 'dataProject');
+              //
+              // }
+              // console.log(panjang);
+              // console.log(dataProject.rows.length);
               // let project = dataProject.rows;
-              console.log('count',count.rows);
-              console.log('dataMember.rows',dataMember.rows);
-              console.log('dataView.rows',dataView.rows);
-              console.log('project',dataProject.rows[0].project_name);
-              console.log(count.rows[0].count);
-              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', role:role, user_id:user_id, panjang:count.rows[0].count, dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
+              // console.log('count',count.rows);
+              // console.log('dataMember.rows',dataMember.rows);
+              // console.log('dataView.rows',dataView.rows);
+              // console.log('project',dataProject.rows[0].project_name);
+              // console.log(count.rows[0].count);
+              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', role:role, user_id:user_id, panjang:totalRecord, dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
             }); //query data project
           }); //query data view
         }); //query data member
@@ -172,16 +164,16 @@ module.exports = function(db){
     }
 
     console.log("TES 1=> VIEW: ", view);
+    let sql = `UPDATE users SET view='${view}' WHERE user_id='${user_id}'`;
+    console.log(sql);
+    db.query(sql, (err, dataShowProject) => {
+      if(err){
+        res.send(err);
+      }else{
+        res.redirect('/projects');
+      }
+    });
 
-      // let sql = `UPDATE users SET view='${view}' WHERE user_id='${user_id}'`;
-      // db.query(sql, (err, dataShowProject) => {
-      //   if(err){
-      //     res.send(err);
-      //   }else{
-          res.redirect('/projects');
-      //   }
-      //
-      // });
   });
 
   router.get('/addProject',  /*loginChecker, */  function(req, res, next){

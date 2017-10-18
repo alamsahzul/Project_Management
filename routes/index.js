@@ -11,7 +11,37 @@ module.exports = function(db){
     if(req.session.useri_id){
       res.redirect('/projects');
     }else{
-      res.render('index', {title: "PMS"});
+      // res.render('index', {title: "PMS"});
+    db.query(`SELECT * FROM members`,(err, data) => {
+              let akhir = []
+              console.log(akhir.length);
+              console.log(data.rows.length );
+              var temp = [];
+              for(var i=0; (data.rows.length||akhir.length)>i; i++){
+                temp.push(data.rows[i].project_id);
+                if(data.rows[i].project_id){
+                  akhir.push(data.rows[i].project_id);
+                }
+
+              }
+
+              // function tes () {
+              //   for(var i=0; /*data.rows.length || akhir.length */ (1 || 8) >i; i++){
+              //     // if(data.rows[i].project_id == akhir[i] ){
+              //     //   akhir.push(data.rows[i].project_id);
+              //     // }else{
+              //     //   akhir.push(data.rows[i].project_id);
+              //     // }
+              //     console.log(i);
+              //   }
+              //
+              //   return i;
+              // }
+        let tes1 = temp;
+        //tes();
+        //console.log(data.rows[0].project_id);
+        res.send(tes1);
+    })
     }
   }); //penutup ROUTER HALAMAN UTAMA/LOGIN
 

@@ -19,6 +19,14 @@ body, html {
     user-select: none;
     cursor: default;
 }
+.editDelete{
+  width: 6vw;
+}
+.action{
+  width: 20%;
+  text-align: center;
+  /*background-color: red;*/
+}
 
 /*
  * Card component
