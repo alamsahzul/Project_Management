@@ -24,7 +24,7 @@ module.exports = function(db){
     let project_members = req.query.project_members;
     let halaman         = Number(req.query.page) || 1;
     let url             = (req.url == "/") ? "/?page=1" : req.url;
-    console.log(url);
+    // console.log(url);
 
     if (url.indexOf('&cari=') != -1){
       halaman = 1;
