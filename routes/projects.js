@@ -129,27 +129,27 @@ module.exports = function(db){
 
   router.post('/optionShowProject/:user_id', loginChecker, (req, res) => {
     console.log('ini halaman option show project');
-        // let user= req.session.user_id;
-      //
-      // let user_id                     = req.session.user_id;
-      // console.log(user_id);
-      // let view                        = [];
-      // let check_show_project_id       = req.body.check_show_project_id;
-      // let check_show_project_name     = req.body.check_show_project_name;
-      // let check_show_project_members  = req.body.check_show_project_members;
-      // if(check_show_project_id){
-      //   view.push(check_show_project_id)
-      // }
-      // if(check_show_project_name){
-      //   view.push(check_show_project_name)
-      // }
-      // if(check_show_project_members){
-      //   view.push(check_show_project_members)
-      // }
-      // view.toString();
-      //
-      // console.log("TES 1=> VIEW: ", view);
-      //
+    let user_id                     = req.session.user_id;
+    console.log(user_id);
+    let view                        = [];
+    let check_show_project_id       = req.body.check_show_project_id;
+    let check_show_project_name     = req.body.check_show_project_name;
+    let check_show_project_members  = req.body.check_show_project_members;
+    if(check_show_project_id){
+       view.push(check_show_project_id)
+    }
+    if(check_show_project_name){
+      view.push(check_show_project_name)
+    }
+    if(check_show_project_members){
+      view.push(check_show_project_members)
+    }
+
+    view = view.toString();
+    
+
+    console.log("TES 1=> VIEW: ", view);
+
       // let sql = `UPDATE users SET view='${view}' WHERE user_id='${user_id}'`;
       // db.query(sql, (err, dataShowProject) => {
       //   if(err){
