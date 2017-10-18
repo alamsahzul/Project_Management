@@ -11,6 +11,7 @@ module.exports = function(db){
     console.log('halaman projects');
     // console.log('ini req.session.email', req.session.email);
     let user_id = req.session.user_id;
+    console.log(user_id);
 
     let bagianWhere     = [];
     let where_status    = false;
@@ -117,7 +118,7 @@ module.exports = function(db){
               console.log('dataView.rows',dataView.rows);
               console.log('project',dataProject.rows[0].project_name);
               console.log(count.rows[0].count);
-              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', panjang:count.rows[0].count, dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
+              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', user_id:user_id, panjang:count.rows[0].count, dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
             }); //query data project
           }); //query data view
         }); //query data member
@@ -126,6 +127,39 @@ module.exports = function(db){
     })
   });
 
+  router.post('/optionShowProject/:user_id', loginChecker, (req, res) => {
+    console.log('ini halaman option show project');
+        // let user= req.session.user_id;
+      //
+      // let user_id                     = req.session.user_id;
+      // console.log(user_id);
+      // let view                        = [];
+      // let check_show_project_id       = req.body.check_show_project_id;
+      // let check_show_project_name     = req.body.check_show_project_name;
+      // let check_show_project_members  = req.body.check_show_project_members;
+      // if(check_show_project_id){
+      //   view.push(check_show_project_id)
+      // }
+      // if(check_show_project_name){
+      //   view.push(check_show_project_name)
+      // }
+      // if(check_show_project_members){
+      //   view.push(check_show_project_members)
+      // }
+      // view.toString();
+      //
+      // console.log("TES 1=> VIEW: ", view);
+      //
+      // let sql = `UPDATE users SET view='${view}' WHERE user_id='${user_id}'`;
+      // db.query(sql, (err, dataShowProject) => {
+      //   if(err){
+      //     res.send(err);
+      //   }else{
+          res.redirect('/projects');
+      //   }
+      //
+      // });
+  });
 
   router.get('/addProject',  /*loginChecker, */  function(req, res, next){
     console.log('ini adalah add halaman project');

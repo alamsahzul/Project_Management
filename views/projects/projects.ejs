@@ -71,8 +71,10 @@
     <!--#################### OPTIONS  #######################################-->
         <div class="card card-container">
           Option
-            <form class="form-signin" method="GET" action="">
+            <form class="form-signin" method="POST" action="/projects/optionShowProject/<%=user_id%>">
                 <!-- <span id="reauth-email" class="reauth-email"></span> -->
+                <!-- <input type="text" name="user_id" value="<%#= req.session.user_id%>"> -->
+
                 <table id="mytable" class="table table-bordred table-striped">
                   <tr>
                     <td style="width:10%"><input type="checkbox" name="check_show_project_id" value="members.project_id" <%=(query.check_show_project_id) ? " checked":"" %>></td>
