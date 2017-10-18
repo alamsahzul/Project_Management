@@ -77,12 +77,12 @@
 
                 <table id="mytable" class="table table-bordred table-striped">
                   <tr>
-                    <td style="width:10%"><input type="checkbox" name="check_show_project_id" value="members.project_id" <%=(query.check_show_project_id) ? " checked":"" %>></td>
+                    <td style="width:10%"><input type="checkbox" name="check_show_project_id" value="members.project_id" <%=(dataProject[i].project_id) ? " checked":"" %>></td>
                     <td style="text-align: left;">Project IDs</td>
                   </tr>
 
                   <tr>
-                    <td style="width:10%"><input type="checkbox" name="check_show_project_name" value="projects.project_name" <%=(query.check_show_project_name) ? " checked":"" %>></td>
+                    <td style="width:10%"><input type="checkbox" name="check_show_project_name" value="projects.project_name" <%= (dataProject[i].project_name) ? " checked":"" %>></td>
                     <td style="text-align: left;" > Name of Projects </td>
                   </tr>
 
@@ -106,10 +106,15 @@
       <table id="mytable" class="table table-bordred table-striped">
         <thead>
           <tr>
-             <th style="width:10%">No. </th>
-             <th>Name of Project</th>
-             <th>Members</th>
-             <th colspan="2" style="width: 10%">ACTION</th>
+             <th style="width:10%">Project ID</th>
+
+             <%if(dataProject[i].project_name){%>
+                <th>Name of Project</th>
+             <%}%>
+             <!-- <th>Members</th> -->
+             <%if(role=='admin'){%>
+               <th colspan="2" style="width: 10%">ACTION</th>
+               <%}%>
            </tr>
        </thead>
 
@@ -121,15 +126,21 @@
              {%>
                <tr>
                  <td style="width:10%"> <a class="btn btn-primary" href="/projectsDetail/<%=dataProject[i].project_id%>"> <%=dataProject[i].project_id%> </a></td>
-                 <td style="text-align:left"><p><%= dataProject[i].project_name%></p></td>
+                 <%if(dataProject[i].project_name){%>
+                    <td style="text-align:left"><p><%= dataProject[i].project_name %></p></td>
+                 <%}%>
+
                  <!-- <td>  <%= dataProject[i].user_id %> </td> -->
-                 <td>
-                   <a class="btn btn-success" href="/projects/edit/<%=dataProject[i].project_id%>">Edit</a>
-                 </td>
-                 <td>
-                   <a  class="btn btn-danger" href="/projects/delete/<%=dataProject[i].project_id%>" class='delete'
-                   onclick="return confirm('Yakin menghapusn data?')">Delete</a>
-                 </td>
+                  <%if(role=='admin'){%>
+                    <td>
+                      <a class="btn btn-success" href="/projects/edit/<%=dataProject[i].project_id%>">Edit</a>
+                    </td>
+                    <td>
+                      <a  class="btn btn-danger" href="/projects/delete/<%=dataProject[i].project_id%>" class='delete'
+                      onclick="return confirm('Yakin menghapusn data?')">Delete</a>
+                    </td>
+                  <%}%>
+
                </tr>
        <% } %>
        </tbody>

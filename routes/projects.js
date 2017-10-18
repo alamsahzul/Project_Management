@@ -11,6 +11,7 @@ module.exports = function(db){
     console.log('halaman projects');
     // console.log('ini req.session.email', req.session.email);
     let user_id = req.session.user_id;
+    let role    = req.session.role;
     console.log(user_id);
 
     let bagianWhere     = [];
@@ -118,7 +119,7 @@ module.exports = function(db){
               console.log('dataView.rows',dataView.rows);
               console.log('project',dataProject.rows[0].project_name);
               console.log(count.rows[0].count);
-              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', user_id:user_id, panjang:count.rows[0].count, dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
+              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', role:role, user_id:user_id, panjang:count.rows[0].count, dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
             }); //query data project
           }); //query data view
         }); //query data member
@@ -146,7 +147,15 @@ module.exports = function(db){
     }
 
     view = view.toString();
-    
+    if(view == undefined){
+      console.log("undefined");
+    }else if (view == null) {
+      console.log("null");
+    }else if( view == ""){
+      console.log("view");
+    }else{
+      console.log("gile lho ndro");
+    }
 
     console.log("TES 1=> VIEW: ", view);
 
