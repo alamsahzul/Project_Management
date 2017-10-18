@@ -15,6 +15,18 @@ module.exports = function(db){
     // let role    = "admin";
     console.log(typeof(role));
     console.log(role);
+    let a;
+    let b = "";
+    let c = null;
+    let d = undefined;
+    console.log(typeof(a));
+    console.log(a);
+    console.log(typeof(b));
+    console.log(b);
+    console.log(typeof(c));
+    console.log(c);
+    console.log(typeof(d));
+    console.log(d);
 
     let bagianWhere     = [];
     let where_status    = false;
