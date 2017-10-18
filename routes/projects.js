@@ -12,7 +12,9 @@ module.exports = function(db){
     // console.log('ini req.session.email', req.session.email);
     let user_id = req.session.user_id;
     let role    = req.session.role;
-    console.log(user_id);
+    // let role    = "admin";
+    console.log(typeof(role));
+    console.log(role);
 
     let bagianWhere     = [];
     let where_status    = false;

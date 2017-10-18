@@ -8,7 +8,7 @@ module.exports = function(db){
   //####  ROUTER HALAMAN UTAMA/LOGIN
   router.get('/', function(req, res, next) {
     console.log('halaman login');
-    if(req.session.email){
+    if(req.session.useri_id){
       res.redirect('/projects');
     }else{
       res.render('index', {title: "PMS"});
@@ -21,11 +21,12 @@ module.exports = function(db){
     let input_email     = req.body.email,
         input_password  = req.body.password;
     console.log(input_email);
-    db.query(`SELECT user_id FROM users WHERE password = $1 AND email = $2`, [input_password, input_email], (err, data) => {
+    db.query(`SELECT user_id, role FROM users WHERE password = $1 AND email = $2`, [input_password, input_email], (err, data) => {
       console.log('data.rows.length: ',data.rows.length);
       if (data.rows.length == 1){
         req.session.user_id = data.rows[0].user_id;
         req.session.role    = data.rows[0].role;
+        console.log(req.session.role);
         res.redirect('/projects');
       }
       else {
