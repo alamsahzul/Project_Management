@@ -21,10 +21,18 @@ module.exports = function(db){
                   console.log(data.rows[j]);
                   akhir.push(data.rows[j])
                   let sql = `SELECT firstname, lastname FROM users JOIN members ON users.user_id = members.user_id WHERE project_id = '${data.rows[j].project_id}'`;
-                  console.log(sql);
+
                   db.query(sql, (err, users) => {
-                    // console.log('members project_id ', data.rows[j].project_id+" adalah "+ users.rows);
-                    console.log(users.rows[1].firstname);
+                    console.log(data.rows[j].project_id);
+                    console.log(users.rows);
+                    for(var i=0; users.rows.length>0; i++){
+                        // console.log('members project_id ', data.rows[j].project_id+" adalah "+ users.rows[i].firstname, users.rows[i].lastname);
+                        console.log(i);
+
+                        // break;
+                    }
+
+                    // console.log(users.rows.toString());
                   });
                 }
         let tes1 = akhir;
