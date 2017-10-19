@@ -11,13 +11,7 @@ module.exports = function(db){
     if(req.session.useri_id){
       res.redirect('/projects');
     }else{
-      // res.render('index', {title: "PMS"});
-      var project_id = [];
-      db.query(`SELECT members.project_id, projects.project_name, firstname  FROM members JOIN projects ON members.project_id = projects.project_id JOIN users ON users.user_id = members.user_id`,(err, data) => {
-        db.query('SELECT DISTINCT project_id FROM members', (err, dataProject_id) => {
-          res.render('index', {data: data.rows, project_id: dataProject_id.rows})
-        })
-      });
+      res.render('index', {title: "PMS"});
     }
   }); //penutup ROUTER HALAMAN UTAMA/LOGIN
 
