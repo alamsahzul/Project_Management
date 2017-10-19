@@ -28,32 +28,6 @@
             Register
         </a>
     </div><!-- /card-container -->
-
-    <div class="container-fluid" style="float: left; clear:both; width:100%">
-      <div class="row">
-        <table width="100%">
-          <tr>
-            <th>Project ID</th>
-            <th>Project Name</th>
-            <th>Members</th>
-          </tr>
-
-              <%for(var a=0; data.length>a; a++){%>
-                  <tr>
-                    <td><%=data[a].project_id%> </td>
-                    <td><%=data[a].project_name%></td>
-                    <td>
-                      <%
-                        if(data[a].project_name)
-                        data[a].firstname
-                      %>
-                    </td>
-                  </tr>
-                <%}%>
-
-        </table>
-      </div>
-    </div>
 <!--################### The end of Content Body ####################-->
     </div>
   </div>
