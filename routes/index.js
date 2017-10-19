@@ -15,20 +15,6 @@ module.exports = function(db){
       var project_id = [];
       db.query(`SELECT members.project_id, projects.project_name, firstname  FROM members JOIN projects ON members.project_id = projects.project_id JOIN users ON users.user_id = members.user_id`,(err, data) => {
         db.query('SELECT DISTINCT project_id FROM members', (err, dataProject_id) => {
-          let project_idtampung = [];
-          function project_id(x) {
-
-            for(let i=0; x>i; i++){
-              project_idtampung.push({
-                project_id: `${dataProject_id[i].project_id}`,
-                members   : ''
-              })
-            }
-            return project_idtampung;
-          }
-
-          console.log(project_id());
-
           res.render('index', {data: data.rows, project_id: dataProject_id.rows})
         })
       });

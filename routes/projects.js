@@ -178,12 +178,9 @@ module.exports = function(db){
 
   router.get('/addProject',  /*loginChecker, */  function(req, res, next){
     console.log('ini adalah add halaman project');
-    let email = req.session.email;
-    console.log(req.session.email);
     db.query(`SELECT * FROM users`, (err, dataUser) => {
       let item = dataUser.rows;
-      console.log(item);
-        res.render('projects/addProject', { title: 'Add Project', page:'Add Project', data: item });
+      res.render('projects/addProject', { title: 'Add Project', page:'Add Project', data: item });
     });
   });
 
