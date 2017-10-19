@@ -12,50 +12,28 @@ module.exports = function(db){
       res.redirect('/projects');
     }else{
       // res.render('index', {title: "PMS"});
-    db.query(`SELECT DISTINCT members.project_id, projects.project_name  FROM members JOIN projects ON members.project_id = projects.project_id`,(err, data) => {
-              let project_idList   = []
-              let tampung          = [];
-              let project_id       = '';
-              let project_name     = '';
-              let firstname        = [];
+      var project_id = [];
+      db.query(`SELECT members.project_id, projects.project_name, firstname  FROM members JOIN projects ON members.project_id = projects.project_id JOIN users ON users.user_id = members.user_id`,(err, data) => {
+        db.query('SELECT DISTINCT project_id FROM members', (err, dataProject_id) => {
+          let project_idtampung = [];
+          function project_id(x) {
 
-                for(let j=0; j<data.rows.length; j++){
-                  project_idList.push(data.rows[j].project_id)
-                  project_id    = data.rows[j].project_id;
-                  project_name  = data.rows[j].project_name;
-                  tampung.push({
-                      project_id : `${project_id}`,
-                      project_name: `${project_name}`,
-                      members: `${firstname}`
-                  })
+            for(let i=0; x>i; i++){
+              project_idtampung.push({
+                project_id: `${dataProject_id[i].project_id}`,
+                members   : ''
+              })
+            }
+            return project_idtampung;
+          }
 
-                  let sql = `SELECT firstname, lastname FROM users JOIN members ON users.user_id = members.user_id WHERE project_id = '${data.rows[j].project_id}'`;
-                  db.query(sql, (err, users) => {
-                      for(var i=0; users.rows.length>i; i++){
-                        firstname.push(users.rows[i].firstname);
-                      }
-                      for(var a=0; tampung.length>a; a++){
-                        if(tampung[a].project_id == data.rows[j].project_id){
-                            tampung[a].members = `${firstname}`
-                        }else {
-                          tampung.push({
-                              project_id : `${project_id}`,
-                              project_name: `${project_name}`,
-                              members: `${firstname}`
-                          })
-                        }
-                        break; 
-                        console.log(tampung);
-                      }
+          console.log(project_id());
 
-                  });
-
-                }
-
-                res.send(tampung);
-    })
-  }
-}); //penutup ROUTER HALAMAN UTAMA/LOGIN
+          res.render('index', {data: data.rows, project_id: dataProject_id.rows})
+        })
+      });
+    }
+  }); //penutup ROUTER HALAMAN UTAMA/LOGIN
 
   //####  ROUTER PROSES LOGIN
   router.post('/', function(req, res, next) {

@@ -28,6 +28,55 @@
             Register
         </a>
     </div><!-- /card-container -->
+
+    <div class="container-fluid" style="float: left; clear:both; width:100%">
+      <div class="row">
+        <table width="100%">
+          <tr>
+            <th>Project ID</th>
+            <th>Project Name</th>
+            <th>Members</th>
+          </tr>
+
+            <%for(var i=0; project_id.length>i; i++){
+              for(var a=0; data.length>a; a++){
+                 if(project_id[i].project_id == data[i].project_id){%>
+                  <tr>
+                    <td><%=data[a].project_id%> </td>
+                    <td><%=data[a].project_name%></td>
+                    <td><%=data[a].firstname%> </td>
+                  </tr>
+                <%}
+              }
+            }%>
+
+        </table>
+        <br><br>
+        <table width="100%">
+          <tr>
+            <th>Project Name</th>
+            <th>Members</th>
+          </tr>
+
+            <%for(var a=0; data.length>a; a++){%>
+            <%for(var i=0; data.length>i; i++){%>
+              <%if(data[a].project_name==data[i].project_name){%>
+                <tr>
+                  <td><%=data[i].project_name%></td>
+                  <td><%=data[i].firstname%> </td>
+                </tr>
+            <%}%>
+
+            <%}%>
+            <%}%>
+
+        </table>
+
+
+
+
+      </div>
+    </div>
 <!--################### The end of Content Body ####################-->
     </div>
   </div>
