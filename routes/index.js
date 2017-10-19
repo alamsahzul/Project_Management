@@ -12,31 +12,47 @@ module.exports = function(db){
       res.redirect('/projects');
     }else{
       // res.render('index', {title: "PMS"});
-    db.query(`SELECT DISTINCT project_id FROM members`,(err, data) => {
-              let akhir = []
-              console.log(akhir.length);
-              console.log(data.rows.length );
+    db.query(`SELECT DISTINCT members.project_id, projects.project_name  FROM members JOIN projects ON members.project_id = projects.project_id`,(err, data) => {
+              let project_idList   = []
+              let tampung          = [];
+              let project_id       = '';
+              let project_name     = '';
+              let firstname        = [];
 
                 for(let j=0; j<data.rows.length; j++){
-                  console.log(data.rows[j]);
-                  akhir.push(data.rows[j])
+                  project_idList.push(data.rows[j].project_id)
+                  project_id    = data.rows[j].project_id;
+                  project_name  = data.rows[j].project_name;
+                  tampung.push({
+                      project_id : `${project_id}`,
+                      project_name: `${project_name}`,
+                      members: `${firstname}`
+                  })
+
                   let sql = `SELECT firstname, lastname FROM users JOIN members ON users.user_id = members.user_id WHERE project_id = '${data.rows[j].project_id}'`;
-
                   db.query(sql, (err, users) => {
-                    console.log(data.rows[j].project_id);
-                    console.log(users.rows);
-                    for(var i=0; users.rows.length>0; i++){
-                        // console.log('members project_id ', data.rows[j].project_id+" adalah "+ users.rows[i].firstname, users.rows[i].lastname);
-                        console.log(i);
+                      for(var i=0; users.rows.length>i; i++){
+                        firstname.push(users.rows[i].firstname);
+                      }
+                      for(var a=0; tampung.length>a; a++){
+                        if(tampung[a].project_id == data.rows[j].project_id){
+                            tampung[a].members = `${firstname}`
+                        }else {
+                          tampung.push({
+                              project_id : `${project_id}`,
+                              project_name: `${project_name}`,
+                              members: `${firstname}`
+                          })
+                        }
+                        break; 
+                        console.log(tampung);
+                      }
 
-                        // break;
-                    }
-
-                    // console.log(users.rows.toString());
                   });
+
                 }
-        let tes1 = akhir;
-        res.send(tes1);
+
+                res.send(tampung);
     })
   }
 }); //penutup ROUTER HALAMAN UTAMA/LOGIN
