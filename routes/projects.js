@@ -180,7 +180,7 @@ module.exports = function(db){
     console.log('ini adalah add halaman project');
     db.query(`SELECT * FROM users`, (err, dataUser) => {
       let item = dataUser.rows;
-      res.render('projects/addProject', { title: 'Add Project', page:'Add Project', data: item });
+        res.render('projects/addProject', { title: 'Add Project', page:'Add Project', data: item });
     });
   });
 
@@ -206,9 +206,10 @@ module.exports = function(db){
               return res.send(err);
             }
             //console.log("berhasil menyimpan ke table member");
-            res.redirect('/projects/projects');
+            // res.redirect('/projects/projects');
           }) //query members
         } //for
+        res.redirect('/projects/projects');
       }); //query project
   }); //router post add
 
