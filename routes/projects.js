@@ -40,7 +40,7 @@ module.exports = function(db){
       where_status = true;
     }
 
-    let sql = 'SELECT COUNT(DISTINCT M.project_id) FROM members AS M JOIN projects AS P ON P.project_id=M.project_id';
+    let sql = 'SELECT COUNT(M.project_id) FROM members AS M JOIN projects AS P ON P.project_id=M.project_id';
     if(where_status){
       sql += ' WHERE ' + bagianWhere.join(' AND ');
     }
@@ -54,7 +54,7 @@ module.exports = function(db){
         let offset        = (halaman-1)*limit;
         let jumlahHalaman = (totalRecord == 0) ? 1 : Math.ceil(totalRecord/limit);
 
-        // filer yang akan ditampilkan
+        // filer yang akan dNorwayitampilkan
         let show                      = [];
         let showStatusProjectId       = true;
         let showStatusProjectName     = true;
@@ -117,7 +117,7 @@ module.exports = function(db){
               console.log(dataProject.rows, 'dataProject');
               //
               // }
-              // console.log(panjang);
+              // console.log(totalRecord);
               // console.log(dataProject.rows.length);
               // let project = dataProject.rows;
               // console.log('count',count.rows);
@@ -125,7 +125,17 @@ module.exports = function(db){
               // console.log('dataView.rows',dataView.rows);
               // console.log('project',dataProject.rows[0].project_name);
               // console.log(count.rows[0].count);
-              res.render('projects/projects', {title: 'Projects', page:'PROJECTS', role:role, user_id:user_id, panjang:totalRecord, dataMembers:dataMember.rows, dataProject:dataProject.rows, halaman:halaman, jumlahHalaman: jumlahHalaman, query: req.query, url:url })
+              dataProject.rows.map
+              res.render('projects/projects', {
+                title: 'Projects', page:'PROJECTS',
+                role:role, user_id:user_id,
+                panjang:totalRecord,
+                dataMembers:dataMember.rows,
+                dataProject:dataProject.rows,
+                halaman:halaman,
+                jumlahHalaman: jumlahHalaman,
+                query: req.query,
+                url:url })
             }); //query data project
           }); //query data view
         }); //query data member
